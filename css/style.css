@@ -1,0 +1,63 @@
+@charset "UTF-8";
+@import url(colors.css);
+@import url(texttypes.css);
+
+/* CSS Document */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-style: normal;
+    font-size: 16px;
+}
+#root {
+    margin: 0 auto;
+    max-width: 22.5rem;
+    padding-bottom: .2rem;
+}
+main {
+    max-width: 97.77%;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px 1px rgba(0,0,0,0.25) inset;
+}
+a {
+    text-decoration: none;
+}
+li {
+    list-style-type: none;
+}
+
+/* RWD: */
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.grid {
+    display: grid;
+}
+.flex {
+    display: flex;
+}
+.flex1 {
+    flex: 1;
+}
+.flex2 {
+    flex: 2;
+}
+.flex3 {
+    flex: 3;
+}
+.flex4 {
+    flex: 4;
+}
+.flex5 {
+    flex: 5;
+}
+.flex6 {
+    flex: 6;
+}
