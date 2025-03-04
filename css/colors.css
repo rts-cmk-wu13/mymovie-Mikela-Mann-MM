@@ -1,7 +1,8 @@
 :root {
     /* Type color */
-    --type-color: #dbe3ff;
-    --type_font-color: #88a4e8;
+    --genre-color: #dbe3ff;
+    --genre_font-color: #88a4e8;
+    --star-color: #FFC319;
 
     /* font color */
 

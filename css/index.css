@@ -113,6 +113,20 @@ img {
   width: 100%;
   border-radius: 5px;
 }
+
+i {
+  color: var(--star-color);
+  width:0.75rem; 
+  height:0.75rem; 
+  margin-right:0.25rem; 
+  margin-top: 0.094rem;
+  margin-bottom: 0.094rem;
+}
+
+i.fa-clock{
+  color: var(--black-color);
+}
+
 button {
   padding: 4px 8px;
   cursor: pointer;
@@ -122,10 +136,32 @@ button {
   border-radius: 100px;
 }
 
+.genre {
+  color: var(--genre_font-color);
+  background-color: var(--genre-color)
+}
+
+.genres-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.genre-tag {
+  background-color: #f0f0f0;
+  border-radius: 100px;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.runtime {
+  color: var(--black-color)
+}
+
   /*footer */
 
   footer {
-    display:none;
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin-top: 20px;
     margin-bottom: 20px;

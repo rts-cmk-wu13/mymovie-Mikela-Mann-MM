@@ -1,7 +1,7 @@
 // HEADER:
-
 let header = document.querySelector("header");
-header.innerHTML = `
+if (header) {
+    header.innerHTML = `
         <img class="header__menu-icon" src="./icons/menu.png">
         <h1>MyMovies</h1>
         <div class="darkmode">
@@ -11,7 +11,9 @@ header.innerHTML = `
             </label>
         </div>
     `;
+}
 
+// NOW SHOWING
 const url = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
 const options = {
     method: 'GET',
@@ -20,113 +22,183 @@ const options = {
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMzc3ODhmMjFlYWJiYWNmZTUyM2EzMTNhNDhkNmQ4ZSIsIm5iZiI6MTc0MDk4Njc1My44NjcsInN1YiI6IjY3YzU1OTgxODgxYzAxM2VkZTdhNmZhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DYGFq8X8Ss7StoeBY7Fj8siATwZKhP3V7CeQtJmLfaE'
 }};
 
-// Opret section
-const section = document.createElement('section');
-section.classList.add('showing');
+// Opret section til "Now Showing"
+const sectionShowing = document.createElement('section');
+sectionShowing.classList.add('showing');
 
 // Opret overskrift
-const heading = document.createElement('h2');
-heading.textContent = 'Now Showing';
+const headingShowing = document.createElement('h2');
+headingShowing.textContent = 'Now Showing';
 
 // Opret knap
-const button = document.createElement('button');
-button.id = 'seeMore';
-button.textContent = 'See More';
+const buttonShowing = document.createElement('button');
+buttonShowing.id = 'seeMoreShowing';
+buttonShowing.textContent = 'See More';
 
 // Opret container til film
-const moviesContainer = document.createElement('div');
-moviesContainer.classList.add('movies-container');
+const moviesContainerShowing = document.createElement('div');
+moviesContainerShowing.classList.add('movies-container');
 
 // Tilføj elementerne til section
-section.appendChild(heading);
-section.appendChild(button);
-section.appendChild(moviesContainer);
+sectionShowing.appendChild(headingShowing);
+sectionShowing.appendChild(buttonShowing);
+sectionShowing.appendChild(moviesContainerShowing);
 
 // Tilføj section til body
-document.body.appendChild(section);
+document.body.appendChild(sectionShowing);
 
-// Funktion til at hente film og vise dem
+// Funktion til at hente "Now Showing" film
 function fetchMovies() {
     fetch(url, options)
         .then(res => res.json())
         .then(data => {
-            moviesContainer.innerHTML = ''; // Ryd tidligere film
+            moviesContainerShowing.innerHTML = ''; // Ryd tidligere film
             data.results.forEach(movie => {
                 const article = document.createElement('article');
 
                 const img = document.createElement('img');
                 img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-                img.alt = movie.title;
+                img.alt = movie.title;  
+                img.loading = 'lazy';
 
                 const title = document.createElement('h3');
                 title.textContent = movie.title;
 
                 const rating = document.createElement('p');
-                rating.textContent = `Rating: ${movie.vote_average}`;
+                rating.innerHTML = `<i class="fa-solid fa-star"></i> ${movie.vote_average}/10 IMDb`;
 
                 article.appendChild(img);
                 article.appendChild(title);
                 article.appendChild(rating);
-                moviesContainer.appendChild(article);
+                moviesContainerShowing.appendChild(article);
             });
         })
         .catch(err => console.error(err));
-} 
 
+    }
 // Hent film, når siden loader
 fetchMovies();
 
-/*  */
+// POPULAR MOVIES
+const popularUrl = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
+const popularOptions = {
+    method: 'GET',
+    headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMzc3ODhmMjFlYWJiYWNmZTUyM2EzMTNhNDhkNmQ4ZSIsIm5iZiI6MTc0MDk4Njc1My44NjcsInN1YiI6IjY3YzU1OTgxODgxYzAxM2VkZTdhNmZhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DYGFq8X8Ss7StoeBY7Fj8siATwZKhP3V7CeQtJmLfaE'
+}};
 
-let footer = document.querySelector("footer");
-footer.innerHTML = `
-        <div class="footer__content">
-        <img class="footer__menu-icon1" src="./icons/bookmark.svg">
-        <img class="footer__menu-icon2" src="./icons/bookmark2.svg">
-        <img class="footer__menu-icon3" src="./icons/bookmark3.svg">
-        </div>
-    `;
+// Opret section til "Popular"
+const sectionPopular = document.createElement('section');
+sectionPopular.classList.add('popular');
 
+// Opret overskrift
+const headingPopular = document.createElement('h2');
+headingPopular.textContent = 'Popular';
 
+// Opret knap
+const buttonPopular = document.createElement('button');
+buttonPopular.id = 'seeMorePopular';
+buttonPopular.textContent = 'See More';
 
-/* 
+// Opret container til film
+const moviesContainerPopular = document.createElement('div');
+moviesContainerPopular.classList.add('movies-container__popular');
 
-            // POKELIST:
-            let divElms = document.createElement("div");
-            divElms.className = "pokelist__div";
+// Tilføj elementerne til section
+sectionPopular.appendChild(headingPopular);
+sectionPopular.appendChild(buttonPopular);
+sectionPopular.appendChild(moviesContainerPopular);
 
-            divElms.innerHTML += data.results
-                .map(function (pokemon) {
-                    let id = pokemon.url.slice(0, -1).split("/").pop();
+// Tilføj section til body
+document.body.appendChild(sectionPopular);
 
-                    return `
-        <article class="pokemon" id="${id}">
-            <a href="detail.html?pokemon=${pokemon.name}&id=${id}">
-                <p class="caption">#${id.padStart(3, "0")}</p>
-                <img loading="lazy" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png" alt="${pokemon.name}">
-                <p class="body3">${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
-                        }</p>
-            </a>
-        </article>
-        `;
-                })
-                .join("");
-
-            // pokemon being observed:
-            let observedPokemon = divElms.querySelector(
-                "article:nth-last-of-type(3)"
-            );
-            observer.observe(observedPokemon);
-
-            // div'er with pokemons added to bigger div
-            divElmOuter.appendChild(divElms);
-        });
-
-    // pokelist div added to main
-    document.querySelector("main").append(divElmOuter);
+// Funktion til at hente detaljer om film
+function fetchMovieDetails(movieId) {
+    return fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options)
+        .then(res => res.json())
+        .catch(err => console.error('Error fetching movie details:', err));
 }
 
-// kalder fetch functionen:
-fetchPokemon(currentOffset);
+// Funktion til at hente populære film
+function fetchPopularMovies() {
+    fetch(popularUrl, popularOptions)
+        .then(res => res.json())
+        .then(data => {
+            let movieDetailsFetches = data.results.map(movie => fetchMovieDetails(movie.id));
+            
+            return Promise.all(movieDetailsFetches).then(moviesDetails => {
+                let combinedMovies = data.results.map((movie, index) => ({
+                    ...movie,
+                    genres: moviesDetails[index]?.genres || [],
+                    runtime: moviesDetails[index]?.runtime || 'N/A'
+                }));
+                
+                displayMovies(combinedMovies);
+            });
+        })
+        .catch(err => console.error('Error fetching popular movies:', err));
+}
 
- */
+function formatRuntime(minutes) {
+    if (!minutes || isNaN(minutes)) return 'N/A';
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}m`;
+}
+
+function displayMovies(movies) {
+            moviesContainerPopular.innerHTML = ''; // Ryd tidligere film
+            movies.forEach(movie => {
+                const article = document.createElement('article');
+
+                const img = document.createElement('img');
+                img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+                img.alt = movie.title;  
+                img.loading = 'lazy';
+
+                const title = document.createElement('h3');
+                title.textContent = movie.title;
+
+                const rating = document.createElement('p');
+                rating.innerHTML = `<i class="fa-solid fa-star"></i>${movie.vote_average} IMDb`;
+
+            
+    
+
+                const genreText = movie.genres.map(genre => genre.name).join(' ') || 'No genres available';
+                const genresContainer = document.createElement('div');
+                genresContainer.classList.add('genres-container');
+                const genreElement = document.createElement('span');
+                genreElement.classList.add('genre-tag');
+                const genres = document.createElement('p');
+        genreElement.classList.add('genre');
+        genreElement.textContent = `${genreText}`; 
+
+        const runtime = document.createElement('p');
+        runtime.classList.add('runtime');
+        runtime.innerHTML = `<i class="fa-regular fa-clock"></i> ${formatRuntime(movie.runtime)}`;
+
+        article.appendChild(img);
+        article.appendChild(title);
+        article.appendChild(rating);
+        article.appendChild(genres);
+        article.appendChild(runtime);
+        
+        moviesContainerPopular.appendChild(article);
+    });
+}
+
+fetchPopularMovies();
+
+// FOOTER:
+let footer = document.querySelector("footer");
+if (footer) {
+    footer.innerHTML = `
+        <div class="footer__content">
+            <img class="footer__menu-icon1" src="./icons/bookmark.svg">
+            <img class="footer__menu-icon2" src="./icons/bookmark2.svg">
+            <img class="footer__menu-icon3" src="./icons/bookmark3.svg">
+        </div>
+    `;
+}
