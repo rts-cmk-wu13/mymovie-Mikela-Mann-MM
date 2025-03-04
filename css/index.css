@@ -141,21 +141,12 @@ button {
   background-color: var(--genre-color)
 }
 
-.genres-container {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.genre-tag {
-  background-color: #f0f0f0;
-  border-radius: 100px;
-  padding: 5px 10px;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
 .runtime {
   color: var(--black-color)
+}
+
+.movie-link {
+  cursor: pointer;
 }
 
   /*footer */

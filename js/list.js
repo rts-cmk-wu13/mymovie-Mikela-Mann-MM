@@ -20,7 +20,8 @@ const options = {
     headers: {
         accept: 'application/json',
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMzc3ODhmMjFlYWJiYWNmZTUyM2EzMTNhNDhkNmQ4ZSIsIm5iZiI6MTc0MDk4Njc1My44NjcsInN1YiI6IjY3YzU1OTgxODgxYzAxM2VkZTdhNmZhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DYGFq8X8Ss7StoeBY7Fj8siATwZKhP3V7CeQtJmLfaE'
-}};
+    }
+};
 
 // Opret section til "Now Showing"
 const sectionShowing = document.createElement('section');
@@ -56,9 +57,13 @@ function fetchMovies() {
             data.results.forEach(movie => {
                 const article = document.createElement('article');
 
+                const link = document.createElement('a');
+                link.href = `details.html?movieId=${movie.id}`; // Link til detaljesiden
+                link.classList.add('movie-link');
+
                 const img = document.createElement('img');
                 img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-                img.alt = movie.title;  
+                img.alt = movie.title;
                 img.loading = 'lazy';
 
                 const title = document.createElement('h3');
@@ -71,11 +76,14 @@ function fetchMovies() {
                 article.appendChild(title);
                 article.appendChild(rating);
                 moviesContainerShowing.appendChild(article);
+
+                link.appendChild(article);
+                moviesContainerShowing.appendChild(link);
             });
         })
         .catch(err => console.error(err));
 
-    }
+}
 // Hent film, når siden loader
 fetchMovies();
 
@@ -86,7 +94,8 @@ const popularOptions = {
     headers: {
         accept: 'application/json',
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMzc3ODhmMjFlYWJiYWNmZTUyM2EzMTNhNDhkNmQ4ZSIsIm5iZiI6MTc0MDk4Njc1My44NjcsInN1YiI6IjY3YzU1OTgxODgxYzAxM2VkZTdhNmZhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DYGFq8X8Ss7StoeBY7Fj8siATwZKhP3V7CeQtJmLfaE'
-}};
+    }
+};
 
 // Opret section til "Popular"
 const sectionPopular = document.createElement('section');
@@ -126,14 +135,14 @@ function fetchPopularMovies() {
         .then(res => res.json())
         .then(data => {
             let movieDetailsFetches = data.results.map(movie => fetchMovieDetails(movie.id));
-            
+
             return Promise.all(movieDetailsFetches).then(moviesDetails => {
                 let combinedMovies = data.results.map((movie, index) => ({
                     ...movie,
                     genres: moviesDetails[index]?.genres || [],
                     runtime: moviesDetails[index]?.runtime || 'N/A'
                 }));
-                
+
                 displayMovies(combinedMovies);
             });
         })
@@ -148,32 +157,29 @@ function formatRuntime(minutes) {
 }
 
 function displayMovies(movies) {
-            moviesContainerPopular.innerHTML = ''; // Ryd tidligere film
-            movies.forEach(movie => {
-                const article = document.createElement('article');
+    moviesContainerPopular.innerHTML = ''; // Ryd tidligere film
+    movies.forEach(movie => {
+        const article = document.createElement('article');
 
-                const img = document.createElement('img');
-                img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-                img.alt = movie.title;  
-                img.loading = 'lazy';
+        const link = document.createElement('a');
+        link.href = `details.html?movieId=${movie.id}`; // Link til detaljesiden
+        link.classList.add('movie-link');
 
-                const title = document.createElement('h3');
-                title.textContent = movie.title;
+        const img = document.createElement('img');
+        img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+        img.alt = movie.title;
+        img.loading = 'lazy';
 
-                const rating = document.createElement('p');
-                rating.innerHTML = `<i class="fa-solid fa-star"></i>${movie.vote_average} IMDb`;
+        const title = document.createElement('h3');
+        title.textContent = movie.title;
 
-            
-    
+        const rating = document.createElement('p');
+        rating.innerHTML = `<i class="fa-solid fa-star"></i>${movie.vote_average} IMDb`;
 
-                const genreText = movie.genres.map(genre => genre.name).join(' ') || 'No genres available';
-                const genresContainer = document.createElement('div');
-                genresContainer.classList.add('genres-container');
-                const genreElement = document.createElement('span');
-                genreElement.classList.add('genre-tag');
-                const genres = document.createElement('p');
-        genreElement.classList.add('genre');
-        genreElement.textContent = `${genreText}`; 
+        const genreText = movie.genres.map(genre => genre.name).join(' ') || 'No genres available';
+        const genres = document.createElement('p');
+        genres.classList.add('genre');
+        genres.textContent = `${genreText}`;
 
         const runtime = document.createElement('p');
         runtime.classList.add('runtime');
@@ -184,8 +190,9 @@ function displayMovies(movies) {
         article.appendChild(rating);
         article.appendChild(genres);
         article.appendChild(runtime);
-        
-        moviesContainerPopular.appendChild(article);
+
+        link.appendChild(article);
+        moviesContainerPopular.appendChild(link);
     });
 }
 
