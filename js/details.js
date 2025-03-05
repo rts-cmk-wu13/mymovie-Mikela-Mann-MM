@@ -3,25 +3,33 @@ let params = new URLSearchParams(search);
 let id = params.get("movieId");
 console.log("Movie ID:", id);
 
+function formatRuntime(minutes) {
+    if (!minutes || isNaN(minutes)) return 'N/A';
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}min`;
+}
+
 const options = {
-  method: 'GET',
-  headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMzc3ODhmMjFlYWJiYWNmZTUyM2EzMTNhNDhkNmQ4ZSIsIm5iZiI6MTc0MDk4Njc1My44NjcsInN1YiI6IjY3YzU1OTgxODgxYzAxM2VkZTdhNmZhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DYGFq8X8Ss7StoeBY7Fj8siATwZKhP3V7CeQtJmLfaE'
-  }
+    method: 'GET',
+    headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMzc3ODhmMjFlYWJiYWNmZTUyM2EzMTNhNDhkNmQ4ZSIsIm5iZiI6MTc0MDk4Njc1My44NjcsInN1YiI6IjY3YzU1OTgxODgxYzAxM2VkZTdhNmZhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DYGFq8X8Ss7StoeBY7Fj8siATwZKhP3V7CeQtJmLfaE'
+    }
 };
 
+// DOM-elementer
 let headerElm = document.querySelector("header");
+let mainElm = document.querySelector("main");
 
+// Opret sektioner
 let detailHeader = document.createElement("section");
 detailHeader.className = "detailheader";
-
-let mainElm = document.querySelector("main");
 
 let movieDetail = document.createElement("section");
 movieDetail.classList.add("moviedetail");
 
-let movieDescription = document.createElement("article");
+let movieDescription = document.createElement("section");
 movieDescription.classList.add("moviedescription");
 
 let movieCast = document.createElement("section");
@@ -30,12 +38,12 @@ movieCast.classList.add("cast");
 // Tilføj sektionerne til DOM
 headerElm.appendChild(detailHeader);
 mainElm.appendChild(movieDetail);
-movieDetail.appendChild(movieDescription);
-movieDetail.appendChild(movieCast);
+mainElm.appendChild(movieDescription);
+mainElm.appendChild(movieCast);
 
 // Tilføj HTML-indhold til header
 detailHeader.innerHTML = `
-    <i class="fa-solid fa-arrow-left"></i>
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="darkmode">
         <label class="switch">
             <input type="checkbox" id="switch" />
@@ -48,67 +56,107 @@ const img = document.createElement('img');
 img.classList.add("hero");
 img.loading = 'lazy';
 
+detailHeader.prepend(img);
 
-// Opret section til "Description"
+// Opret sektion til "Details"
+const sectionDetails = document.createElement('section');
+sectionDetails.classList.add('details__section');
+
+const headingDetails = document.createElement('h1');
+headingDetails.textContent = ' ';
+
+const detailsList = document.createElement('ul');
+detailsList.classList.add('details-list');
+
+sectionDetails.appendChild(headingDetails);
+sectionDetails.appendChild(detailsList);
+movieDescription.appendChild(sectionDetails);
+
+// Opret sektion til "Description"
 const sectionDescription = document.createElement('section');
 sectionDescription.classList.add('description__section');
 
-// Opret overskrift
 const headingDescription = document.createElement('h2');
 headingDescription.textContent = 'Description';
 
-
-// Opret paragraph 
 const paragraphDescription = document.createElement('p');
 paragraphDescription.classList.add('description');
 
-// Tilføj elementerne til section
 sectionDescription.appendChild(headingDescription);
 sectionDescription.appendChild(paragraphDescription);
-
-// Tilføj section til hovedindholdet
 movieDescription.appendChild(sectionDescription);
 
+// Fetch movie details
+fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=translations`, options)
+    .then(response => response.json())
+    .then(movie => {
+        img.src = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
+        img.alt = movie.title;
+        paragraphDescription.textContent = movie.overview;
+        console.log(movie);
 
+        // Tilføj film detaljer
+        detailsList.innerHTML = `
+            <div class="title">
+            <h1>${movie.title}</h1>
+            <i class="fa-regular fa-bookmark"></i>
+            </div>
+            <p class="rating_p"><i class="fa-solid fa-star"></i> ${movie.vote_average}/10 IMDb</p>
+            <div class="genre">${movie.genres.map(genre => `<p class="genre__name caption_type">${genre.name}</p>`).join("")}</div>
+            <table>
+                <tr>
+                    <th>Length</th>
+                    <th>Language</th>
+                    <th>Rating</th>
+                </tr>
+                <tr>
+                    <td>${formatRuntime(movie.runtime)}</td>
+                    <td>${movie.translations.translations[0].english_name}</td>
+                    <td id="certification"></td> <!-- Opdateres med rating -->
+                </tr>
+            </table>
+        `;
 
+        // Fetch rating (certification)
+        return fetch(`https://api.themoviedb.org/3/movie/${id}/release_dates`, options);
+    })
+    .then(response => response.json())
+    .then(data => {
+        let certification = "N/A"; // Standardværdi
 
+        // Find US rating 
+        const usRelease = data.results.find(release => release.iso_3166_1 === "US");
+        if (usRelease && usRelease.release_dates.length > 0) {
+            certification = usRelease.release_dates[0].certification || "N/A";
+        }
 
-// FETCH MOVIE DETAILS
-fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options)
-.then((response) => response.json())
-  .then((movie) => {
-    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-    img.alt = movie.title;
-    detailHeader.prepend(img);
-    paragraphDescription.textContent = movie.overview;
+        // Opdater rating i tabellen
+        document.getElementById("certification").textContent = certification;
+    })
+    .catch(err => console.error("Fejl ved hentning af film eller rating:", err));
 
-   
-  })
-  .catch(err => console.error("Fejl ved hentning af film:", err));
 
 // Opret sektion til "Cast"
 const sectionCast = document.createElement('section');
-sectionCast.classList.add('cast');
+sectionCast.classList.add('cast__section');
 
-// Opret overskrift
+const divCast = document.createElement('div');
+divCast.classList.add('cast__info');
+
 const headingCast = document.createElement('h2');
 headingCast.textContent = 'Cast';
 
-// Opret knap
 const buttonCast = document.createElement('button');
 buttonCast.id = 'seeMoreCast';
 buttonCast.textContent = 'See More';
 
-// Opret container til cast medlemmer
 const containerCast = document.createElement('div');
 containerCast.classList.add('container-cast');
 
-// Tilføj elementerne til section
-sectionCast.appendChild(headingCast);
-sectionCast.appendChild(buttonCast);
+sectionCast.appendChild(divCast);
+divCast.appendChild(headingCast)
+divCast.appendChild(buttonCast);
 sectionCast.appendChild(containerCast);
-
-// Tilføj sektionen til hovedindholdet
 movieCast.appendChild(sectionCast);
 
 // Fetch cast information
@@ -116,13 +164,14 @@ fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`, options
     .then(response => response.json())
     .then(data => {
         containerCast.innerHTML = ''; // Ryd tidligere cast
-
-        data.cast.slice(0, 5).forEach(cast => { // Hent de første 5 skuespillere
+        data.cast.slice(0, 4).forEach(cast => {
             let castHTML = `
+                <div class="cast">
                 <figure class="cast__img">
                     <img src="https://image.tmdb.org/t/p/w185${cast.profile_path}" alt="${cast.name}">
                 </figure>
-                <p class="cast__name">${cast.name}</p>
+                <h4 class="cast__name">${cast.name}</h4>
+                </div>
             `;
             containerCast.innerHTML += castHTML;
         });

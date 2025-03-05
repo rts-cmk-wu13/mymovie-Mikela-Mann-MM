@@ -176,6 +176,7 @@ function displayMovies(movies) {
         const rating = document.createElement('p');
         rating.innerHTML = `<i class="fa-solid fa-star"></i>${movie.vote_average} IMDb`;
 
+        
         const genreText = movie.genres.map(genre => genre.name).join(' ') || 'No genres available';
         const genres = document.createElement('p');
         genres.classList.add('genre');

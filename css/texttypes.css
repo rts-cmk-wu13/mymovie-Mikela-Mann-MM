@@ -39,7 +39,7 @@ p, .caption, .rating {
     font-family: "Mulish", serif;
     font-weight: 700;
     font-style: normal;
-    color: var(--type_font-color);
+    color: var(--genre_font-color);
 }
 
 a {
