@@ -27,6 +27,13 @@ movieDescription.classList.add("moviedescription");
 let movieCast = document.createElement("section");
 movieCast.classList.add("cast");
 
+// Tilføj sektionerne til DOM
+headerElm.appendChild(detailHeader);
+mainElm.appendChild(movieDetail);
+movieDetail.appendChild(movieDescription);
+movieDetail.appendChild(movieCast);
+
+// Tilføj HTML-indhold til header
 detailHeader.innerHTML = `
     <i class="fa-solid fa-arrow-left"></i>
     <div class="darkmode">
@@ -41,24 +48,74 @@ const img = document.createElement('img');
 img.classList.add("hero");
 img.loading = 'lazy';
 
+
+// Opret section til "Description"
+const sectionDescription = document.createElement('section');
+sectionDescription.classList.add('description__section');
+
+// Opret overskrift
+const headingDescription = document.createElement('h2');
+headingDescription.textContent = 'Description';
+
+
+// Opret paragraph 
+const paragraphDescription = document.createElement('p');
+paragraphDescription.classList.add('description');
+
+// Tilføj elementerne til section
+sectionDescription.appendChild(headingDescription);
+sectionDescription.appendChild(paragraphDescription);
+
+// Tilføj section til hovedindholdet
+movieDescription.appendChild(sectionDescription);
+
+
+
+
+
 // FETCH MOVIE DETAILS
 fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options)
 .then((response) => response.json())
   .then((movie) => {
-img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-img.alt = movie.title;
-detailHeader.prepend(img);
+    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    img.alt = movie.title;
+    detailHeader.prepend(img);
+    paragraphDescription.textContent = movie.overview;
+
+   
   })
   .catch(err => console.error("Fejl ved hentning af film:", err));
 
+// Opret sektion til "Cast"
+const sectionCast = document.createElement('section');
+sectionCast.classList.add('cast');
 
-// nyt fetch til description movies cast
+// Opret overskrift
+const headingCast = document.createElement('h2');
+headingCast.textContent = 'Cast';
+
+// Opret knap
+const buttonCast = document.createElement('button');
+buttonCast.id = 'seeMoreCast';
+buttonCast.textContent = 'See More';
+
+// Opret container til cast medlemmer
+const containerCast = document.createElement('div');
+containerCast.classList.add('container-cast');
+
+// Tilføj elementerne til section
+sectionCast.appendChild(headingCast);
+sectionCast.appendChild(buttonCast);
+sectionCast.appendChild(containerCast);
+
+// Tilføj sektionen til hovedindholdet
+movieCast.appendChild(sectionCast);
 
 // Fetch cast information
 fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`, options)
     .then(response => response.json())
     .then(data => {
-        movieCast.innerHTML = ''; // Ryd tidligere cast
+        containerCast.innerHTML = ''; // Ryd tidligere cast
 
         data.cast.slice(0, 5).forEach(cast => { // Hent de første 5 skuespillere
             let castHTML = `
@@ -67,7 +124,7 @@ fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`, options
                 </figure>
                 <p class="cast__name">${cast.name}</p>
             `;
-            movieCast.innerHTML += castHTML;
+            containerCast.innerHTML += castHTML;
         });
     })
     .catch(err => console.error("Fejl ved hentning af cast:", err));
