@@ -43,9 +43,9 @@ mainElm.appendChild(movieCast);
 
 // Tilføj HTML-indhold til header
 detailHeader.innerHTML = `
-    <a href="index.html"><i class="fa-solid fa-arrow-left"></i></a>
-    <div class="darkmode">
-        <label class="switch">
+    <a href="index.html"><i class="fa-solid fa-arrow-left-long"></i></a>
+    <div class="darkmodedetails">
+        <label class="switchdetails">
             <input type="checkbox" id="switch" />
             <span class="slider round"></span>
         </label>
@@ -90,7 +90,7 @@ movieDescription.appendChild(sectionDescription);
 fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=translations`, options)
     .then(response => response.json())
     .then(movie => {
-        img.src = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
+        img.src = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
         img.alt = movie.title;
         paragraphDescription.textContent = movie.overview;
         console.log(movie);
@@ -105,14 +105,14 @@ fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_respons
             <div class="genre">${movie.genres.map(genre => `<p class="genre__name caption_type">${genre.name}</p>`).join("")}</div>
             <table>
                 <tr>
-                    <th>Length</th>
-                    <th>Language</th>
-                    <th>Rating</th>
+                    <td class="table__heading">Length</th>
+                    <td class="table__heading">Language</th>
+                    <td class="table__heading">Rating</th>
                 </tr>
                 <tr>
-                    <td>${formatRuntime(movie.runtime)}</td>
-                    <td>${movie.translations.translations[0].english_name}</td>
-                    <td id="certification"></td> <!-- Opdateres med rating -->
+                    <td class="table__data">${formatRuntime(movie.runtime)}</td>
+                    <td class="table__data">${movie.translations.translations[0].english_name}</td>
+                    <td id="certification" class="table__data"></td> <!-- Opdateres med rating -->
                 </tr>
             </table>
         `;

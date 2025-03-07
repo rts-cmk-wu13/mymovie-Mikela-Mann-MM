@@ -4,7 +4,9 @@ divElm.id = "root"
 divElm.innerHTML = `
     <header>
     </header>
-    <main></main>
+    <main>
+        <div class=wrapper></div>
+    </main>
     <footer>
     </footer>
 `

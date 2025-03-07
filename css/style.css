@@ -14,9 +14,16 @@ body {
 }
 #root {
     margin: 0 auto;
-    max-width: 23.438rem;
     padding-bottom: .2rem;
+    max-width: 75rem;
 }
+
+.wrapper {
+  margin: 0 auto;
+  padding-bottom: .2rem;
+  max-width: 75rem;
+}
+
 main {
     width: 100%;
     margin: 0 auto;
@@ -132,7 +139,8 @@ img {
 
 /* BUTTONS */
 
-  button {
+  button, #seeMoreCast {
+    height: fit-content;
     padding: 4px 8px;
     cursor: pointer;
     border: 1px solid var(--link-color);
