@@ -27,9 +27,14 @@ const options = {
 const sectionShowing = document.createElement('section');
 sectionShowing.classList.add('showing');
 
+// Opret div til overskrift og knap
+const divShowing = document.createElement('div');
+divShowing.classList.add('showing_title');
+
+
 // Opret overskrift
 const headingShowing = document.createElement('h2');
-headingShowing.textContent = 'Now Showing';
+headingShowing.textContent = 'showing_headline';
 
 // Opret knap
 const buttonShowing = document.createElement('button');
@@ -41,8 +46,9 @@ const moviesContainerShowing = document.createElement('div');
 moviesContainerShowing.classList.add('movies-container');
 
 // Tilføj elementerne til section
-sectionShowing.appendChild(headingShowing);
-sectionShowing.appendChild(buttonShowing);
+divShowing.appendChild(headingShowing);
+divShowing.appendChild(buttonShowing);
+sectionShowing.appendChild(divShowing);
 sectionShowing.appendChild(moviesContainerShowing);
 
 // Tilføj section til body
@@ -68,6 +74,7 @@ function fetchMovies() {
 
                 const title = document.createElement('h3');
                 title.textContent = movie.title;
+                title.classList.add('popular__title')
 
                 const rating = document.createElement('p');
                 rating.innerHTML = `<i class="fa-solid fa-star"></i> ${movie.vote_average}/10 IMDb`;
@@ -101,6 +108,10 @@ const popularOptions = {
 const sectionPopular = document.createElement('section');
 sectionPopular.classList.add('popular');
 
+// Opret div til overskrift og knap
+const divPopular = document.createElement('div');
+divPopular.classList.add('popular_title');
+
 // Opret overskrift
 const headingPopular = document.createElement('h2');
 headingPopular.textContent = 'Popular';
@@ -115,8 +126,9 @@ const moviesContainerPopular = document.createElement('div');
 moviesContainerPopular.classList.add('movies-container__popular');
 
 // Tilføj elementerne til section
-sectionPopular.appendChild(headingPopular);
-sectionPopular.appendChild(buttonPopular);
+divPopular.appendChild(headingPopular);
+divPopular.appendChild(buttonPopular);
+sectionPopular.appendChild(divPopular);
 sectionPopular.appendChild(moviesContainerPopular);
 
 // Tilføj section til body
