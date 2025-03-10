@@ -1,4 +1,4 @@
-// Hent roden af dokumentet
+/* // Hent roden af dokumentet
 let rootElm = document.documentElement;
 
 // Læs dark mode-status fra Local Storage
@@ -10,3 +10,4 @@ if (isDarkMode) {
 } else {
     rootElm.setAttribute("data-dark", "false");
 }
+ */

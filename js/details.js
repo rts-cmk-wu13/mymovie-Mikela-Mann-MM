@@ -18,6 +18,7 @@ const options = {
     }
 };
 
+
 // DOM-elementer
 let headerElm = document.querySelector("header");
 let mainElm = document.querySelector("main");
@@ -85,6 +86,7 @@ paragraphDescription.classList.add('description');
 sectionDescription.appendChild(headingDescription);
 sectionDescription.appendChild(paragraphDescription);
 movieDescription.appendChild(sectionDescription);
+darkMode();
 
 // Fetch movie details
 fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=translations`, options)

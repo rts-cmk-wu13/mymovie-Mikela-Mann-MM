@@ -13,6 +13,7 @@ if (header) {
     `;
 }
 
+
 // NOW SHOWING
 const url = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
 const options = {
@@ -22,6 +23,7 @@ const options = {
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMzc3ODhmMjFlYWJiYWNmZTUyM2EzMTNhNDhkNmQ4ZSIsIm5iZiI6MTc0MDk4Njc1My44NjcsInN1YiI6IjY3YzU1OTgxODgxYzAxM2VkZTdhNmZhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DYGFq8X8Ss7StoeBY7Fj8siATwZKhP3V7CeQtJmLfaE'
     }
 };
+darkMode();
 
 // Opret section til "Now Showing"
 const sectionShowing = document.createElement('section');
@@ -34,7 +36,7 @@ divShowing.classList.add('showing_title');
 
 // Opret overskrift
 const headingShowing = document.createElement('h2');
-headingShowing.textContent = 'showing_headline';
+headingShowing.textContent = 'Now Showing';
 
 // Opret knap
 const buttonShowing = document.createElement('button');
@@ -55,7 +57,12 @@ sectionShowing.appendChild(moviesContainerShowing);
 document.body.appendChild(sectionShowing);
 
 // Funktion til at hente "Now Showing" film
+let currentPage = 1;
+let isFetching = false;
 function fetchMovies() {
+    if (isFetching) return;
+    isFetching = true;
+
     fetch(url, options)
         .then(res => res.json())
         .then(data => {
@@ -74,7 +81,7 @@ function fetchMovies() {
 
                 const title = document.createElement('h3');
                 title.textContent = movie.title;
-                title.classList.add('popular__title')
+                title.classList.add('showing__headline')
 
                 const rating = document.createElement('p');
                 rating.innerHTML = `<i class="fa-solid fa-star"></i> ${movie.vote_average}/10 IMDb`;
@@ -87,12 +94,23 @@ function fetchMovies() {
                 link.appendChild(article);
                 moviesContainerShowing.appendChild(link);
             });
+            currentPage++;
+            isFetching = false;
+
         })
         .catch(err => console.error(err));
+        isFetching = false;
 
 }
 // Hent film, når siden loader
 fetchMovies();
+
+//Infinity Scroll 
+window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        fetchMovies();
+    }
+})
 
 // POPULAR MOVIES
 const popularUrl = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
@@ -156,9 +174,12 @@ function fetchPopularMovies() {
                 }));
 
                 displayMovies(combinedMovies);
+                currentPage++;
+                isFetching = false;
             });
         })
         .catch(err => console.error('Error fetching popular movies:', err));
+        isFetching = false;
 }
 
 function formatRuntime(minutes) {
@@ -193,10 +214,10 @@ function displayMovies(movies) {
         rating.innerHTML = `<i class="fa-solid fa-star"></i>${movie.vote_average} IMDb`;
 
         
-        const genreText = movie.genres.map(genre => genre.name).join(' ') || 'No genres available';
-        const genres = document.createElement('p');
+        const genres = document.createElement('div');
         genres.classList.add('genre');
-        genres.textContent = `${genreText}`;
+        genres.innerHTML = movie.genres.map(genre => `<p class="genre__name caption_type">${genre.name}</p>`).join("");
+
 
         const runtime = document.createElement('p');
         runtime.classList.add('runtime');
@@ -216,6 +237,14 @@ function displayMovies(movies) {
 }
 
 fetchPopularMovies();
+
+// Infinity Scroll
+window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        fetchPopularMovies();
+    }
+});
+
 
 // FOOTER:
 let footer = document.querySelector("footer");
