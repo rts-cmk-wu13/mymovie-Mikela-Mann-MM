@@ -160,10 +160,14 @@ function displayMovies(movies) {
     moviesContainerPopular.innerHTML = ''; // Ryd tidligere film
     movies.forEach(movie => {
         const article = document.createElement('article');
+        article.classList.add('popular-movie__article');
 
         const link = document.createElement('a');
         link.href = `details.html?movieId=${movie.id}`; // Link til detaljesiden
         link.classList.add('movie-link');
+
+        const div = document.createElement('div');
+        article.classList.add('popular-movie__content');
 
         const img = document.createElement('img');
         img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
@@ -187,10 +191,12 @@ function displayMovies(movies) {
         runtime.innerHTML = `<i class="fa-regular fa-clock"></i> ${formatRuntime(movie.runtime)}`;
 
         article.appendChild(img);
-        article.appendChild(title);
-        article.appendChild(rating);
-        article.appendChild(genres);
-        article.appendChild(runtime);
+        article.appendChild(div);
+        div.appendChild(title);
+        div.appendChild(rating);
+        div.appendChild(genres);
+        div.appendChild(runtime);
+        article.appendChild(div);
 
         link.appendChild(article);
         moviesContainerPopular.appendChild(link);
@@ -204,9 +210,12 @@ let footer = document.querySelector("footer");
 if (footer) {
     footer.innerHTML = `
         <div class="footer__content">
-            <img class="footer__menu-icon1" src="./icons/bookmark.svg">
-            <img class="footer__menu-icon2" src="./icons/bookmark2.svg">
+            <img class="footer__menu-icon1" src="./icons/bookmark1.svg">
+            <img class="footer__menu-icon2" src="./icons/shape.svg">
             <img class="footer__menu-icon3" src="./icons/bookmark3.svg">
         </div>
     `;
 }
+
+// Tilføj section til body
+document.body.appendChild(footer);

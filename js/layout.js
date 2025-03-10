@@ -5,7 +5,6 @@ divElm.innerHTML = `
     <header>
     </header>
     <main>
-        <div class=wrapper></div>
     </main>
     <footer>
     </footer>
