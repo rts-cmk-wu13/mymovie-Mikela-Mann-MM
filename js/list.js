@@ -132,8 +132,12 @@ const observer = new IntersectionObserver((entries) => {
 
 fetchMovies();
 
-/* // POPULAR MOVIES
-const popularUrl = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
+// Til Observer / Infinity scroll
+let currentPagePopularMovie = 1; 
+let isFetchingPopularMovies = false; 
+
+// POPULAR MOVIES
+const popularUrl = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${currentPagePopularMovie}`;
 const popularOptions = {
     method: 'GET',
     headers: {
@@ -172,8 +176,14 @@ sectionPopular.appendChild(moviesContainerPopular);
 // Tilføj section til body
 document.body.appendChild(sectionPopular);
 
+currentPagePopularMovie++;
+isFetchingPopularMovies = false;
+
 // Funktion til at hente detaljer om film
 function fetchMovieDetails(movieId) {
+    if (isFetchingPopularMovies) return;
+    isFetchingPopularMovies = true;
+
     return fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options)
         .then(res => res.json())
         .catch(err => console.error('Error fetching movie details:', err));
@@ -181,8 +191,17 @@ function fetchMovieDetails(movieId) {
 
 // Funktion til at hente populære film
 function fetchPopularMovies() {
-    fetch(popularUrl, popularOptions)
-        .then(res => res.json())
+    console.log('fetchPopularMovies');
+    if (isFetchingPopularMovies) return;
+    isFetchingPopularMovies = true;
+
+    const updatedPopularUrl = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${currentPagePopularMovie}`;
+
+    fetch(updatedPopularUrl, popularOptions)
+        .then(res => {
+            console.log(res);
+            return res.json()})
+
         .then(data => {
             let movieDetailsFetches = data.results.map(movie => fetchMovieDetails(movie.id));
 
@@ -194,13 +213,15 @@ function fetchPopularMovies() {
                 }));
 
                 displayMovies(combinedMovies);
-                currentPage++;
-                isFetching = false;
+                currentPagePopularMovie++; 
+                observeLastPopularMovie();
             });
         })
-        .catch(err => console.error('Error fetching popular movies:', err));
-        isFetching = false;
-}
+        .catch(err => console.error('Error fetching popular movies:', err))
+        .finally(() => {
+            isFetchingPopularMovies = false;
+        });
+
 
 function formatRuntime(minutes) {
     if (!minutes || isNaN(minutes)) return 'N/A';
@@ -256,14 +277,27 @@ function displayMovies(movies) {
     });
 }
 
-fetchPopularMovies();
+// Observer det sidste viste film-element
+function observeLastPopularMovie() {
+    const lastPopularMovieElement = moviesContainerPopular.lastElementChild;
+    if (lastPopularMovieElement) {
+    observer.observe(lastPopularMovieElement);
+}
+}
 
-// Infinity Scroll
-window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-        fetchPopularMovies();
-    }
-});
+// Opret en observer til at loade flere film automatisk
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            console.log("Fetching more movies...");
+            observer.unobserve(entry.target);
+            fetchPopularMovies();
+        }
+    });
+}, { rootMargin: "100px", threshold: 1 });
+
+
+fetchPopularMovies();
 
 
 // FOOTER:
@@ -279,4 +313,5 @@ if (footer) {
 }
 
 // Tilføj section til body
-document.body.appendChild(footer); */
+document.body.appendChild(footer); 
+}
