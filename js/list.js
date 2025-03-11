@@ -1,7 +1,38 @@
+/**
+ * Henter favoritfilm fra Local Storage eller initialiserer en tom liste.
+ * @type {Array<string>}
+ */
+let favorites = readFromLocalStorage("favorites") || [];
+
 // HEADER:
 let header = document.querySelector("header");
 if (header) {
     header.innerHTML = `
+
+<div class="burgermenu"><i class="fa-solid fa-bars" aria-label="Åbn menu"></i></div>
+            <nav>
+                <ul class="menu">
+                    <li><a class="current" href="index.html">Forside</a></li>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li class="dropdown">
+                        <a class="drop" href="#">Mere info</a>
+                        <ul class="dropdown-content">
+                            <li>
+                                <a class="drop" href="kontakt.html">Kontakt</a>
+                            </li>
+                            <li>
+                                <a class="drop" href="info.html">Om os</a>
+                            </li>
+                            <li><a class="drop" href="faq.html">FAQ</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="last" href="kurv.html"><i class="fa-solid fa-cart-plus" aria-label="Kurv"></i> Kurv</a>
+                    </li>
+                </ul>
+            </nav>
+
+
         <img class="header__menu-icon" src="./icons/menu.png">
         <h1>MyMovies</h1>
         <div class="darkmode">
@@ -231,7 +262,6 @@ function formatRuntime(minutes) {
 }
 
 function displayMovies(movies) {
-    moviesContainerPopular.innerHTML = ''; // Ryd tidligere film
     movies.forEach(movie => {
         const article = document.createElement('article');
         article.classList.add('popular-movie__article');
@@ -296,7 +326,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { rootMargin: "100px", threshold: 1 });
 
-
+}
 fetchPopularMovies();
 
 
@@ -314,4 +344,3 @@ if (footer) {
 
 // Tilføj section til body
 document.body.appendChild(footer); 
-}

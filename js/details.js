@@ -102,6 +102,9 @@ fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_respons
             <div class="title">
             <h1>${movie.title}</h1>
             <i class="fa-regular fa-bookmark"></i>
+            <!-- <button class="card__favoritebtn ${favorites.includes(dest.id.toString()) ? "card__favoritebtn--selected" : ""}" data-favid="${movie.id}">
+                <i class="fa-regular fa-bookmark"></i>
+                </button> -->
             </div>
             <p class="rating_p"><i class="fa-solid fa-star"></i> ${movie.vote_average}/10 IMDb</p>
             <div class="genre">${movie.genres.map(genre => `<p class="genre__name caption_type">${genre.name}</p>`).join("")}</div>
@@ -118,6 +121,27 @@ fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_respons
                 </tr>
             </table>
         `;
+
+/* // Tilføjer event listeners til favoritknapper
+document.querySelectorAll(".card__favoritebtn").forEach(button => {
+    button.addEventListener("click", function(event) {
+        let btn = event.target.closest("button");
+        let currentId = btn.dataset.favid;
+
+        if (favorites.includes(currentId)) {
+            // Fjerner fra favoritter
+            favorites = favorites.filter(id => id != currentId);
+            btn.classList.remove("card__favoritebtn--selected");
+        } else {
+            // Tilføjer til favoritter
+            favorites.push(currentId);
+            btn.classList.add("card__favoritebtn--selected");
+        }
+
+        saveToLocalStorage("favorites", favorites);
+    });
+}); */
+
 
         // Fetch rating (certification)
         return fetch(`https://api.themoviedb.org/3/movie/${id}/release_dates`, options);
@@ -160,6 +184,8 @@ divCast.appendChild(headingCast)
 divCast.appendChild(buttonCast);
 sectionCast.appendChild(containerCast);
 movieCast.appendChild(sectionCast);
+
+
 
 let currentCastIndex = 4; // Start med de første 4 skuespillere
 let allCast = []; // Gem hele cast-listen her
