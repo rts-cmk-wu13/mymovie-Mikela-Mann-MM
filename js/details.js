@@ -161,21 +161,51 @@ divCast.appendChild(buttonCast);
 sectionCast.appendChild(containerCast);
 movieCast.appendChild(sectionCast);
 
+let currentCastIndex = 4; // Start med de første 4 skuespillere
+let allCast = []; // Gem hele cast-listen her
+let isExpanded = false; // Track om cast-listen er udvidet
+
+
 // Fetch cast information
 fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`, options)
     .then(response => response.json())
     .then(data => {
-        containerCast.innerHTML = ''; // Ryd tidligere cast
-        data.cast.slice(0, 4).forEach(cast => {
-            let castHTML = `
-                <div class="cast">
+        allCast = data.cast; // Gem alle cast-medlemmer
+        loadMoreCast(); // Indlæs de første 4
+    })
+    .catch(err => console.error("Fejl ved hentning af cast:", err));
+
+
+// Funktion til at loade flere cast-medlemmer
+function loadMoreCast() {
+    containerCast.innerHTML = ''; // Ryd cast-container
+    allCast.slice(0, 4).forEach(cast => {
+        let castHTML = `
+            <div class="cast">
                 <figure class="cast__img">
                     <img src="https://image.tmdb.org/t/p/w185${cast.profile_path}" alt="${cast.name}">
                 </figure>
                 <h4 class="cast__name">${cast.name}</h4>
-                </div>
-            `;
-            containerCast.innerHTML += castHTML;
-        });
-    })
-    .catch(err => console.error("Fejl ved hentning af cast:", err));
+            </div>
+        `;
+        containerCast.innerHTML += castHTML;
+    });
+    
+    currentCastIndex += 4;
+
+        /* // Skjul knappen hvis der ikke er flere cast-medlemmer
+        if (currentCastIndex >= allCast.length) {
+            buttonCast.style.display = 'none';
+        } */
+    }
+    
+    // Tilføj event listener til "See More"-knappen
+    buttonCast.addEventListener("click", loadMoreCast);
+    
+    /* // Funktion til at understøtte uendelig scroll
+    document.addEventListener("scroll", () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+            loadMoreCast();
+        }
+    }); */
+    

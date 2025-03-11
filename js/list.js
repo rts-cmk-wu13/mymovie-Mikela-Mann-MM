@@ -216,7 +216,7 @@ function displayMovies(movies) {
         
         const genres = document.createElement('div');
         genres.classList.add('genre');
-        genres.innerHTML = movie.genres.map(genre => `<p class="genre__name caption_type">${genre.name}</p>`).join("");
+        genres.innerHTML = movie.genres.map(genre => `<span class="genre__name caption_type">${genre.name}</span>`).join("");
 
 
         const runtime = document.createElement('p');

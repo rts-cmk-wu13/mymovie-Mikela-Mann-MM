@@ -3,7 +3,8 @@
 
 :root {
   width: 100%;
-  max-width: 375px;
+  max-width: 100%;
+  overflow: auto;
 }
 header {
     display: flex;
@@ -25,8 +26,6 @@ header {
     margin-bottom: 10px;
 }
 
-/* ekstra */
-
 .showing {
   width: 100%;
   margin: 0 auto;
@@ -47,14 +46,11 @@ header {
 
 .popular_title{
   margin-right: 20px;
-}
-
-.showing__headline {
   margin-top: 12px;
   margin-bottom: 8px;
 }
 
-.popular_title {
+.showing__headline {
   margin-top: 12px;
   margin-bottom: 8px;
 }
@@ -64,11 +60,17 @@ header {
   flex-direction: row;
   justify-content: center;
   margin-top: 16px;
+  overflow-x: auto;
+  scrollbar-width: none; 
+}
+
+.popular {
+  margin-bottom: 3.75rem;
 }
 
 article {
-  margin-left: 24px;
-  width: 143px;
+  margin-left: 1.5rem;
+  width: 8.938rem;
   text-align: left;
 }
 img {
@@ -89,13 +91,18 @@ i {
   display: flex;
 }
 
+.movies-container__popular {
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
 .popular h2 {
   margin-left: 24px;
   margin-bottom: 8px;
 }
 
 .popular img {
-  width: 85px;
+  width: 5.313rem;
   margin-bottom: 16px;
   margin-right: 16px;
 }
@@ -114,6 +121,10 @@ i.fa-clock{
   flex-direction: row;
   margin-top: 8px;
   margin-bottom: 8px;
+  white-space: nowrap;
+  /* /* box-sizing: border-box;
+  flex-wrap: wrap; 
+  gap: 0.2rem; */
 }
 
 .genre__name {
@@ -151,9 +162,6 @@ footer {
   gap: 101px;
 }
 
-.footer__menu-icon2, .footer__menu-icon3 {
-  width: 1.313rem;
-}
 
 .footer__menu-icon1 {
   width: 2.3rem;
