@@ -13,9 +13,14 @@ if (header) {
     `;
 }
 
+// Til Observer / Infinity scroll
+let currentPageMovie = 1; 
+let isFetchingMovies = false; 
+let lastElement; 
+
 
 // NOW SHOWING
-const url = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
+const url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${currentPageMovie}`;
 const options = {
     method: 'GET',
     headers: {
@@ -56,17 +61,20 @@ sectionShowing.appendChild(moviesContainerShowing);
 // Tilføj section til body
 document.body.appendChild(sectionShowing);
 
-// Funktion til at hente "Now Showing" film
-let currentPage = 1;
-let isFetching = false;
-function fetchMovies() {
-    if (isFetching) return;
-    isFetching = true;
+currentPageMovie++;
+isFetchingMovies = false;
 
-    fetch(url, options)
+// Funktion til at hente "Now Showing" film
+
+function fetchMovies() {
+    if (isFetchingMovies) return;
+    isFetchingMovies = true;
+
+    const updatedUrl = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${currentPageMovie}`;
+
+    fetch(updatedUrl, options)
         .then(res => res.json())
         .then(data => {
-            moviesContainerShowing.innerHTML = ''; // Ryd tidligere film
             data.results.forEach(movie => {
                 const article = document.createElement('article');
 
@@ -94,25 +102,37 @@ function fetchMovies() {
                 link.appendChild(article);
                 moviesContainerShowing.appendChild(link);
             });
-            currentPage++;
-            isFetching = false;
+            
+            currentPageMovie++; 
+            observeLastMovie();
 
         })
-        .catch(err => console.error(err));
-        isFetching = false;
-
+        .catch(err => console.error(err))
+        .finally(() => {
+            isFetchingMovies = false;
+        });
 }
-// Hent film, når siden loader
+
+// Observer det sidste viste film-element
+function observeLastMovie() {
+    const lastMovieElement = moviesContainerShowing.querySelector('.movie-link:nth-last-child(10)');
+    observer.observe(lastMovieElement);
+}
+
+// Opret en observer til at loade flere film automatisk
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            console.log("Fetching more movies...");
+            observer.unobserve(entry.target);
+            if(!isFetchingMovies) fetchMovies();
+        }
+    });
+}, { rootMargin: "100px", threshold: 1 });
+
 fetchMovies();
 
-//Infinity Scroll 
-window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-        fetchMovies();
-    }
-})
-
-// POPULAR MOVIES
+/* // POPULAR MOVIES
 const popularUrl = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
 const popularOptions = {
     method: 'GET',
@@ -259,4 +279,4 @@ if (footer) {
 }
 
 // Tilføj section til body
-document.body.appendChild(footer);
+document.body.appendChild(footer); */
