@@ -4,36 +4,40 @@
  */
 let favorites = readFromLocalStorage("favorites") || [];
 
+
+// WRAPPER
+let wrapper = document.createElement("div");
+wrapper.classList.add("wrapper");
+document.body.appendChild(wrapper);
+
 // HEADER:
 let header = document.querySelector("header");
 if (header) {
     header.innerHTML = `
 
-<div class="burgermenu"><i class="fa-solid fa-bars" aria-label="Åbn menu"></i></div>
+<!-- <div class="burgermenu header__menu-icon"><i class="fa-solid fa-bars"></i></div>
             <nav>
                 <ul class="menu">
-                    <li><a class="current" href="index.html">Forside</a></li>
-                    <li><a href="produkter.html">Produkter</a></li>
-                    <li class="dropdown">
-                        <a class="drop" href="#">Mere info</a>
-                        <ul class="dropdown-content">
-                            <li>
-                                <a class="drop" href="kontakt.html">Kontakt</a>
-                            </li>
-                            <li>
-                                <a class="drop" href="info.html">Om os</a>
-                            </li>
-                            <li><a class="drop" href="faq.html">FAQ</a></li>
-                        </ul>
-                    </li>
+                    <li><a class="current" href="index.html">Home</a></li>
+                    <li><a href="produkter.html">Now Showing</a></li>
+                    <li><a href="produkter.html">Popular Movies</a></li>
+                    <li><a href="produkter.html">My favorites</a></li>
+                    <li><a href="#">Contact</a></li>
                     <li>
-                        <a class="last" href="kurv.html"><i class="fa-solid fa-cart-plus" aria-label="Kurv"></i> Kurv</a>
+                        <a class="last" href="#"><i class="fa-solid fa-film"></i>Rent a movie</a>
                     </li>
                 </ul>
-            </nav>
+            </nav> -->
 
 
-        <img class="header__menu-icon" src="./icons/menu.png">
+     <img class="header__menu-icon" src="./icons/menu.png">
+       <!--  <div class="burgermenu header__menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            <div> -->
+
+
         <h1>MyMovies</h1>
         <div class="darkmode">
             <label class="switch">
@@ -42,7 +46,11 @@ if (header) {
             </label>
         </div>
     `;
+    wrapper.appendChild(header);
 }
+//MAIN
+let main = document.createElement('main');
+wrapper.appendChild(main);
 
 // Til Observer / Infinity scroll
 let currentPageMovie = 1; 
@@ -117,6 +125,11 @@ function fetchMovies() {
                 img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
                 img.alt = movie.title;
                 img.loading = 'lazy';
+                img.onerror = function () {
+                    this.onerror = null;
+                    this.src = 'img/placeholder.jpg';
+                };
+
 
                 const title = document.createElement('h3');
                 title.textContent = movie.title;
@@ -212,12 +225,15 @@ isFetchingPopularMovies = false;
 
 // Funktion til at hente detaljer om film
 function fetchMovieDetails(movieId) {
-    if (isFetchingPopularMovies) return;
-    isFetchingPopularMovies = true;
+   /*  if (isFetchingPopularMovies) return;
+    isFetchingPopularMovies = true; */
 
-    return fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options)
+    return fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, popularOptions)
         .then(res => res.json())
-        .catch(err => console.error('Error fetching movie details:', err));
+        .catch(err => {
+            console.error('Error fetching movie details:', err);
+        return {};
+});
 }
 
 // Funktion til at hente populære film
@@ -277,6 +293,10 @@ function displayMovies(movies) {
         img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         img.alt = movie.title;
         img.loading = 'lazy';
+        img.onerror = function () {
+            this.onerror = null;
+            this.src = 'img/placeholder.jpg';
+        };
 
         const title = document.createElement('h3');
         title.textContent = movie.title;
@@ -287,7 +307,7 @@ function displayMovies(movies) {
         
         const genres = document.createElement('div');
         genres.classList.add('genre');
-        genres.innerHTML = movie.genres.map(genre => `<span class="genre__name caption_type">${genre.name}</span>`).join("");
+        genres.innerHTML = movie.genres.map(genre => `<span class="genre__name caption_type">${genre.name}</span>`).join(" "); 
 
 
         const runtime = document.createElement('p');
@@ -335,12 +355,12 @@ let footer = document.querySelector("footer");
 if (footer) {
     footer.innerHTML = `
         <div class="footer__content">
-            <img class="footer__menu-icon1" src="./icons/bookmark1.svg">
-            <img class="footer__menu-icon2" src="./icons/shape.svg">
-            <img class="footer__menu-icon3" src="./icons/bookmark3.svg">
+        <a href="#"><img class="footer__menu-icon1" src="./icons/bookmark1.svg"></a>
+            <a href="#"><i class="fa-solid fa-ticket"></i></a>
+            <a href="#"><i class="fa-regular fa-bookmark"></i></a>
         </div>
     `;
 }
 
-// Tilføj section til body
-document.body.appendChild(footer); 
+wrapper.appendChild(footer)
+

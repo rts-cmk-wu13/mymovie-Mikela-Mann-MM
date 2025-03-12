@@ -4,7 +4,19 @@
     color-scheme: light dark;
     --dark-color: hsl(0 0% 10%);
     --light-color: hsl(0, 0%, 97%); 
+    --genre-color: #dbe3ff;
+    --genre_font-color: #88a4e8;
+    --star-color: #FFC319;
 
+    /* font color */
+
+    --p-color: #9c9c9c;
+    --headline-color: #110e47;
+    --link-color: #aaa9b1; /* see more */
+
+    /* GREYSCALE */
+    --black-color: #000;
+    --white-color: #fff;
 }
 
 /* styling af attribut med []*/
@@ -29,10 +41,14 @@ html, .darkmode {
 }
 
 [data-dark="true"] .genre__name {
+    color: var(--genre_font-color);
+}
+
+[data-dark="true"] h1, [data-dark="true"] h2, [data-dark="true"] h4 {
     color: var(--genre-color);
 }
 
-[data-dark="true"] h1, [data-dark="true"] h3 {
+[data-dark="true"] h3 {
     color: var(--white-color);
 }
 
@@ -40,7 +56,29 @@ html, .darkmode {
     color: var(--p-color);
 }
 
+[data-dark="true"] #seeMorePopular, [data-dark="true"] #seeMoreShowing {
+    color: var(--link-color);
+    border-color: var(--link-color);
+    background-color: var(--dark-color);
+    
+}
+
 [data-dark="true"] .movie-link {
     color: var(--link-color);
 }
 
+[data-dark="true"] i {
+    color: var(--link-color);
+}
+
+[data-dark="true"] i.fa-star {
+    color: var(--star-color);
+}
+
+[data-dark="true"] footer {
+    color: var(--dark-color);
+}
+
+[data-dark="true"] footer {
+    background-color: var(--dark-color);
+}

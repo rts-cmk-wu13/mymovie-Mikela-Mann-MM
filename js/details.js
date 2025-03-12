@@ -204,7 +204,6 @@ fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`, options
 
 // Funktion til at loade flere cast-medlemmer
 function loadMoreCast() {
-    containerCast.innerHTML = ''; // Ryd cast-container
     allCast.slice(0, 4).forEach(cast => {
         let castHTML = `
             <div class="cast">
