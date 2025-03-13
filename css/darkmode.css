@@ -40,6 +40,11 @@ html, .darkmode {
     color: var(--dark-text);
 }
 
+[data-dark="true"] main {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
 [data-dark="true"] .genre__name {
     color: var(--genre_font-color);
 }
@@ -56,7 +61,7 @@ html, .darkmode {
     color: var(--p-color);
 }
 
-[data-dark="true"] #seeMorePopular, [data-dark="true"] #seeMoreShowing {
+[data-dark="true"] #seeMorePopular, [data-dark="true"] #seeMoreShowing, [data-dark="true"] #seeMoreCast {
     color: var(--link-color);
     border-color: var(--link-color);
     background-color: var(--dark-color);
@@ -75,8 +80,16 @@ html, .darkmode {
     color: var(--star-color);
 }
 
+[data-dark="true"] i.fa-arrow-left-long {
+    color: var(--white-color);
+}
+
 [data-dark="true"] footer {
     color: var(--dark-color);
+}
+
+[data-dark="true"] .slider {
+    background-color: var(--white-color);
 }
 
 [data-dark="true"] footer {

@@ -218,19 +218,14 @@ function loadMoreCast() {
     
     currentCastIndex += 4;
 
-        /* // Skjul knappen hvis der ikke er flere cast-medlemmer
+        // Skjul knappen hvis der ikke er flere cast-medlemmer
         if (currentCastIndex >= allCast.length) {
             buttonCast.style.display = 'none';
-        } */
+        } 
     }
     
     // Tilføj event listener til "See More"-knappen
     buttonCast.addEventListener("click", loadMoreCast);
     
-    /* // Funktion til at understøtte uendelig scroll
-    document.addEventListener("scroll", () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-            loadMoreCast();
-        }
-    }); */
+    
     
