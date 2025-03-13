@@ -64,10 +64,10 @@ width: 12,5%;
 
 .movies-container {
     display: flex;
-    justify-content: center;
     margin-top: 1rem;
     overflow-x: auto;
     scrollbar-width: none;
+    gap: 1.5rem;
 }
 
 .popular {
@@ -101,7 +101,6 @@ img {
 
 .movie-link {
     cursor: pointer;
-    margin-left: 1.5rem;
 }
 
 .popular h2 {
@@ -161,15 +160,19 @@ footer {
 
 .footer__content {
     display: flex;
-    justify-content: space-evenly;
-    margin-top: 1.125rem;
+    justify-content: space-around;
+    margin: 1.125rem auto;
   
 }
 
 
-.footer__content img, .fa-ticket, .fa-bookmark 
+.footer__content img 
 { 
     width: 1.5rem;
+}
+
+.fa-ticket, .fa-bookmark {
+  font-size: 1rem;
 }
 
 .fa-ticket {

@@ -356,9 +356,9 @@ let footer = document.querySelector("footer");
 if (footer) {
     footer.innerHTML = `
         <div class="footer__content">
-        <img class="footer__menu-icon1" src="./icons/bookmark1.svg"><a href="#"></a>
-            <i class="icon--ticket fa-solid fa-ticket"><a href="#"></a></i>
-            <i class="icon--bookmark fa-regular fa-bookmark"><a href="#"></a></i>
+        <a href="#"><img class="footer__menu-icon1" src="./icons/bookmark1.svg"></a>
+        <a href="#"><i class="icon--ticket fa-solid fa-ticket"></i></a>
+        <a href="#"><i class="icon--bookmark fa-regular fa-bookmark"></i></a>
         </div>
     `;
 
