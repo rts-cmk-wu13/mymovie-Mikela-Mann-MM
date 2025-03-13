@@ -11,9 +11,8 @@ wrapper.classList.add("wrapper");
 document.body.appendChild(wrapper);
 
 // HEADER:
-let header = document.querySelector("header");
-if (header) {
-    header.innerHTML = `
+let header = document.querySelector("header") || document.createElement("header");
+header.innerHTML = `
 
 <!-- <div class="burgermenu header__menu-icon"><i class="fa-solid fa-bars"></i></div>
             <nav>
@@ -47,7 +46,7 @@ if (header) {
         </div>
     `;
     wrapper.appendChild(header);
-}
+
 //MAIN
 let main = document.createElement('main');
 wrapper.appendChild(main);
@@ -96,9 +95,10 @@ divShowing.appendChild(headingShowing);
 divShowing.appendChild(buttonShowing);
 sectionShowing.appendChild(divShowing);
 sectionShowing.appendChild(moviesContainerShowing);
+main.appendChild(sectionShowing);
 
 // Tilføj section til body
-document.body.appendChild(sectionShowing);
+//document.body.appendChild(sectionShowing);
 
 currentPageMovie++;
 isFetchingMovies = false;
@@ -136,7 +136,7 @@ function fetchMovies() {
                 title.classList.add('showing__headline')
 
                 const rating = document.createElement('p');
-                rating.innerHTML = `<i class="fa-solid fa-star"></i> ${movie.vote_average}/10 IMDb`;
+                rating.innerHTML = `<i class="icon--star fa-solid fa-star"></i> ${movie.vote_average}/10 IMDb`;
 
                 article.appendChild(img);
                 article.appendChild(title);
@@ -216,9 +216,10 @@ divPopular.appendChild(headingPopular);
 divPopular.appendChild(buttonPopular);
 sectionPopular.appendChild(divPopular);
 sectionPopular.appendChild(moviesContainerPopular);
+main.appendChild(sectionPopular);
 
 // Tilføj section til body
-document.body.appendChild(sectionPopular);
+//document.body.appendChild(sectionPopular);
 
 currentPagePopularMovie++;
 isFetchingPopularMovies = false;
@@ -302,7 +303,7 @@ function displayMovies(movies) {
         title.textContent = movie.title;
 
         const rating = document.createElement('p');
-        rating.innerHTML = `<i class="fa-solid fa-star"></i>${movie.vote_average} IMDb`;
+        rating.innerHTML = `<i class="fa-solid fa-star"></i>${movie.vote_average}/10 IMDb`;
 
         
         const genres = document.createElement('div');
@@ -355,12 +356,12 @@ let footer = document.querySelector("footer");
 if (footer) {
     footer.innerHTML = `
         <div class="footer__content">
-        <a href="#"><img class="footer__menu-icon1" src="./icons/bookmark1.svg"></a>
-            <a href="#"><i class="fa-solid fa-ticket"></i></a>
-            <a href="#"><i class="fa-regular fa-bookmark"></i></a>
+        <img class="footer__menu-icon1" src="./icons/bookmark1.svg"><a href="#"></a>
+            <i class="icon--ticket fa-solid fa-ticket"><a href="#"></a></i>
+            <i class="icon--bookmark fa-regular fa-bookmark"><a href="#"></a></i>
         </div>
     `;
+
+
+wrapper.appendChild(footer);
 }
-
-wrapper.appendChild(footer)
-

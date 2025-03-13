@@ -12,22 +12,13 @@ body {
     font-style: normal;
     font-size: 16px;
 }
-#root {
-    margin: 0 auto;
-    padding-bottom: .2rem;
-    max-width: 100%;
-}
 
 .wrapper {
+  background-color: var(--white-color);
   margin: 0 auto;
-  padding-bottom: .2rem;
-  max-width: 75rem;
-  width: 100%;
-}
+  max-width: 100%;
+  margin-left: 1.5rem;
 
-main {
-    width: 100%;
-    margin: 0 auto;
 }
 a {
     text-decoration: none;
