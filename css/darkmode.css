@@ -88,8 +88,17 @@ html, .darkmode {
     color: var(--dark-color);
 }
 
-[data-dark="true"] .slider {
+[data-dark="true"] .slider:before {
+    background-color: var(--black-color);
+}
+
+[data-dark="true"] input:checked + .slider, [data-dark="true"] input:focus {
     background-color: var(--white-color);
+    box-shadow: 0 0 1px var(--white-color);
+}
+
+[data-dark="true"] .table__data {
+    color: var(--white-color);
 }
 
 [data-dark="true"] footer {

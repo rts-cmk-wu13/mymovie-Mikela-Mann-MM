@@ -1,4 +1,4 @@
-let search = window.location.search;
+/* let search = window.location.search;
 let params = new URLSearchParams(search);
 let id = params.get("movieId");
 console.log("Movie ID:", id);
@@ -28,10 +28,10 @@ let detailHeader = document.createElement("section");
 detailHeader.className = "detailheader";
 
 let movieDetail = document.createElement("section");
-movieDetail.classList.add("moviedetail");
+movieDetail.classList.add("movie-detail");
 
 let movieDescription = document.createElement("section");
-movieDescription.classList.add("moviedescription");
+movieDescription.classList.add("movie-description");
 
 let movieCast = document.createElement("section");
 movieCast.classList.add("cast");
@@ -56,6 +56,10 @@ detailHeader.innerHTML = `
 const img = document.createElement('img');
 img.classList.add("hero");
 img.loading = 'lazy';
+img.onerror = function () {
+    this.onerror = null;
+    this.src = 'img/placeholder.jpg';
+};
 
 detailHeader.prepend(img);
 
@@ -140,7 +144,7 @@ document.querySelectorAll(".card__favoritebtn").forEach(button => {
 
         saveToLocalStorage("favorites", favorites);
     });
-}); */
+}); 
 
 
         // Fetch rating (certification)
@@ -228,4 +232,171 @@ function loadMoreCast() {
     buttonCast.addEventListener("click", loadMoreCast);
     
     
+     */
+
+    let search = window.location.search;
+    let params = new URLSearchParams(search);
+    let id = params.get("movieId");
+    console.log("Movie ID:", id);
+    
+    function formatRuntime(minutes) {
+        if (!minutes || isNaN(minutes)) return 'N/A';
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hours}h ${mins}min`;
+    }
+    
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer YOUR_API_KEY'
+        }
+    };
+    
+    // DOM-elementer
+    let headerElm = document.querySelector("header");
+    let mainElm = document.querySelector("main");
+    
+    // Opret sektioner
+    let detailHeader = document.createElement("section");
+    detailHeader.className = "detailheader";
+    
+    let movieDetail = document.createElement("section");
+    movieDetail.classList.add("movie-detail");
+    
+    let movieDescription = document.createElement("section");
+    movieDescription.classList.add("movie-description");
+    
+    let movieCast = document.createElement("section");
+    movieCast.classList.add("cast");
+    
+    // Tilføj sektionerne til DOM
+    headerElm.appendChild(detailHeader);
+    mainElm.appendChild(movieDetail);
+    mainElm.appendChild(movieDescription);
+    mainElm.appendChild(movieCast);
+    
+    detailHeader.innerHTML = `
+        <a href="index.html"><i class="fa-solid fa-arrow-left-long"></i></a>
+        <div class="darkmodedetails">
+            <label class="switchdetails">
+                <input type="checkbox" id="switch" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+    `;
+    
+    const img = document.createElement('img');
+    img.classList.add("hero");
+    img.loading = 'lazy';
+    img.onerror = function () {
+        this.onerror = null;
+        this.src = 'img/placeholder.jpg';
+    };
+    detailHeader.prepend(img);
+    
+    const sectionDetails = document.createElement('section');
+    sectionDetails.classList.add('details__section');
+    const headingDetails = document.createElement('h1');
+    const detailsList = document.createElement('ul');
+    detailsList.classList.add('details-list');
+    sectionDetails.appendChild(headingDetails);
+    sectionDetails.appendChild(detailsList);
+    movieDescription.appendChild(sectionDetails);
+    
+    const sectionDescription = document.createElement('section');
+    sectionDescription.classList.add('description__section');
+    const headingDescription = document.createElement('h2');
+    headingDescription.textContent = 'Description';
+    const paragraphDescription = document.createElement('p');
+    paragraphDescription.classList.add('description');
+    sectionDescription.appendChild(headingDescription);
+    sectionDescription.appendChild(paragraphDescription);
+    movieDescription.appendChild(sectionDescription);
+    
+    darkMode();
+    
+    fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=translations`, options)
+        .then(response => response.json())
+        .then(movie => {
+            img.src = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
+            img.alt = movie.title;
+            paragraphDescription.textContent = movie.overview;
+            
+            detailsList.innerHTML = `
+                <h1>${movie.title}</h1>
+                <p class="rating_p"><i class="fa-solid fa-star"></i> ${movie.vote_average}/10 IMDb</p>
+                <div class="genre">${movie.genres.map(genre => `<p class="genre__name caption_type">${genre.name}</p>`).join("")}</div>
+                <table>
+                    <tr>
+                        <td class="table__heading">Length</td>
+                        <td class="table__heading">Language</td>
+                        <td class="table__heading">Rating</td>
+                    </tr>
+                    <tr>
+                        <td class="table__data">${formatRuntime(movie.runtime)}</td>
+                        <td class="table__data">${movie.original_language.toUpperCase()}</td>
+                        <td id="certification" class="table__data">N/A</td>
+                    </tr>
+                </table>
+            `;
+    
+            return fetch(`https://api.themoviedb.org/3/movie/${id}/release_dates`, options);
+        })
+        .then(response => response.json())
+        .then(data => {
+            const usRelease = data.results.find(release => release.iso_3166_1 === "US");
+            let certification = usRelease?.release_dates[0]?.certification || "N/A";
+            document.getElementById("certification").textContent = certification;
+        })
+        .catch(err => console.error("Fejl ved hentning af film eller rating:", err));
+    
+    // Cast sektion
+    const sectionCast = document.createElement('section');
+    sectionCast.classList.add('cast__section');
+    const divCast = document.createElement('div');
+    divCast.classList.add('cast__info');
+    const headingCast = document.createElement('h2');
+    headingCast.textContent = 'Cast';
+    const buttonCast = document.createElement('button');
+    buttonCast.id = 'seeMoreCast';
+    buttonCast.textContent = 'See More';
+    const containerCast = document.createElement('div');
+    containerCast.classList.add('container-cast');
+    divCast.appendChild(headingCast);
+    divCast.appendChild(buttonCast);
+    sectionCast.appendChild(divCast);
+    sectionCast.appendChild(containerCast);
+    movieCast.appendChild(sectionCast);
+    
+    let currentCastIndex = 0;
+    let allCast = [];
+    
+    fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`, options)
+        .then(response => response.json())
+        .then(data => {
+            allCast = data.cast;
+            loadMoreCast();
+        })
+        .catch(err => console.error("Fejl ved hentning af cast:", err));
+    
+    function loadMoreCast() {
+        const nextBatch = allCast.slice(currentCastIndex, currentCastIndex + 4);
+        nextBatch.forEach(cast => {
+            let castHTML = `
+                <div class="cast">
+                    <figure class="cast__img">
+                        <img src="${cast.profile_path ? `https://image.tmdb.org/t/p/w185${cast.profile_path}` : 'img/placeholder.jpg'}" alt="${cast.name}">
+                    </figure>
+                    <h4 class="cast__name">${cast.name}</h4>
+                </div>
+            `;
+            containerCast.innerHTML += castHTML;
+        });
+        currentCastIndex += nextBatch.length;
+        if (currentCastIndex >= allCast.length) buttonCast.style.display = 'none';
+    }
+    
+    buttonCast.addEventListener("click", loadMoreCast);
     

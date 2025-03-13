@@ -75,7 +75,7 @@ sectionShowing.classList.add('showing');
 
 // Opret div til overskrift og knap
 const divShowing = document.createElement('div');
-divShowing.classList.add('showing_title');
+divShowing.classList.add('showing__title');
 
 
 // Opret overskrift
@@ -196,7 +196,7 @@ sectionPopular.classList.add('popular');
 
 // Opret div til overskrift og knap
 const divPopular = document.createElement('div');
-divPopular.classList.add('popular_title');
+divPopular.classList.add('popular__title');
 
 // Opret overskrift
 const headingPopular = document.createElement('h2');
@@ -312,7 +312,7 @@ function displayMovies(movies) {
 
         const runtime = document.createElement('p');
         runtime.classList.add('runtime');
-        runtime.innerHTML = `<i class="fa-regular fa-clock"></i> ${formatRuntime(movie.runtime)}`;
+        runtime.innerHTML = `<i class="icon--clock fa-regular fa-clock"></i> ${formatRuntime(movie.runtime)}`;
 
         article.appendChild(img);
         article.appendChild(div);
