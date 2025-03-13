@@ -40,7 +40,7 @@ html, .darkmode {
     color: var(--dark-text);
 }
 
-[data-dark="true"] main {
+[data-dark="true"] .wrapper {
     background-color: var(--dark-bg);
     color: var(--dark-text);
 }

@@ -29,12 +29,12 @@ header.innerHTML = `
             </nav> -->
 
 
-     <img class="header__menu-icon" src="./icons/menu.png">
-       <!--  <div class="burgermenu header__menu-icon">
+<img class="header__menu-icon" src="./icons/menu.png"> 
+       <!-- <div class="burgermenu header__menu-icon">
             <span></span>
             <span></span>
             <span></span>
-            <div> -->
+            <div>  -->
 
 
         <h1>MyMovies</h1>
