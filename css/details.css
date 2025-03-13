@@ -134,6 +134,11 @@ table {
     margin: 0.094rem 0.25rem;
 }
 
+.rating_p {
+    font-size: 12px;
+    margin: 0.5rem 0 1.25rem 0;
+}
+
 p.description {
     color: #9c9c9c;
 
