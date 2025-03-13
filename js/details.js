@@ -295,6 +295,43 @@ function loadMoreCast() {
         this.src = 'img/placeholder.jpg';
     };
     detailHeader.prepend(img);
+
+    // Trailer-video (initialt skjult)
+const video = document.createElement("iframe");
+video.classList.add("hero-trailer");
+video.frameBorder = "0";
+video.allow = "autoplay; encrypted-media";
+video.style.display = "none"; // Skjult indtil hover
+detailHeader.appendChild(video);
+
+// Hover events til at skifte mellem billede og video
+img.addEventListener("mouseover", () => {
+    img.style.display = "none";
+    video.style.display = "block";
+});
+
+video.addEventListener("mouseout", () => {
+    video.style.display = "none";
+    img.style.display = "block";
+});
+
+// Hent filmdata og trailer
+fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=translations`, options)
+    .then(response => response.json())
+    .then(movie => {
+        img.src = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
+        img.alt = movie.title;
+        return fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`, options);
+    })
+    .then(response => response.json())
+    .then(data => {
+        const trailer = data.results.find(video => video.type === "Trailer" && video.site === "YouTube");
+        if (trailer) {
+            video.src = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=1&rel=0`;
+        }
+    })
+    .catch(err => console.error("Fejl ved hentning af film eller trailer:", err));
+
     
     const sectionDetails = document.createElement('section');
     sectionDetails.classList.add('details__section');
@@ -372,6 +409,7 @@ function loadMoreCast() {
     
     let currentCastIndex = 0;
     let allCast = [];
+    let expanded = false; // Holder styr på om listen er udvidet
     
     fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`, options)
         .then(response => response.json())
@@ -382,7 +420,40 @@ function loadMoreCast() {
         .catch(err => console.error("Fejl ved hentning af cast:", err));
     
     function loadMoreCast() {
-        const nextBatch = allCast.slice(currentCastIndex, currentCastIndex + 4);
+        containerCast.innerHTML = ""; 
+
+
+    if (expanded) {
+        // Vis hele cast-listen
+        allCast.forEach(cast => appendCastMember(cast));
+        buttonCast.textContent = "See Less";
+    } else {
+        // Vis kun de første 4 medlemmer
+        allCast.slice(0, 4).forEach(cast => appendCastMember(cast));
+        buttonCast.textContent = "See More";
+    }
+}
+
+function appendCastMember(cast) {
+    let castHTML = `
+        <div class="cast">
+            <figure class="cast__img">
+                <img src="${cast.profile_path ? `https://image.tmdb.org/t/p/w185${cast.profile_path}` : 'img/placeholder.jpg'}" alt="${cast.name}">
+            </figure>
+            <h4 class="cast__name">${cast.name}</h4>
+        </div>
+    `;
+    containerCast.innerHTML += castHTML;
+}
+
+// Toggle funktion til "See More" / "See Less"
+buttonCast.addEventListener("click", () => {
+    expanded = !expanded; // Skift tilstand
+    loadMoreCast();
+});
+
+
+        /* const nextBatch = allCast.slice(currentCastIndex, currentCastIndex + 4);
         nextBatch.forEach(cast => {
             let castHTML = `
                 <div class="cast">
@@ -398,5 +469,5 @@ function loadMoreCast() {
         if (currentCastIndex >= allCast.length) buttonCast.style.display = 'none';
     }
     
-    buttonCast.addEventListener("click", loadMoreCast);
+    buttonCast.addEventListener("click", loadMoreCast); */
     
