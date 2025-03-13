@@ -4,25 +4,14 @@
     color-scheme: light dark;
     --dark-color: hsl(0 0% 10%);
     --light-color: hsl(0, 0%, 97%); 
-    --genre-color: #dbe3ff;
-    --genre_font-color: #88a4e8;
-    --star-color: #FFC319;
 
-    /* font color */
 
-    --p-color: #9c9c9c;
-    --headline-color: #110e47;
-    --link-color: #aaa9b1; /* see more */
-
-    /* GREYSCALE */
-    --black-color: #000;
-    --white-color: #fff;
 }
 
 /* styling af attribut med []*/
 
 [data-dark="true"] {
-    background-color: var(--dark-bg);
+    background-color: var(--dark-color);
     color: var(--dark-text);
 }
 
@@ -58,6 +47,14 @@ html, .darkmode {
 }
 
 [data-dark="true"] p {
+    color: var(--p-color);
+}
+
+[data-dark="true"] td {
+    color: var(--black-color);
+}
+
+[data-dark="true"] .table__heading {
     color: var(--p-color);
 }
 

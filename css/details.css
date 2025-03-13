@@ -1,8 +1,26 @@
 @import url(colors.css);
 @import url(texttypes.css);
 
+.hero-trailer {
+width: 100%;
+height: 300px;
+object-fit: cover;
+position: absolute;
+top: 0;
+left: 0;
+}
+
 .detailheader {
-    display: grid;
+width: 100%;
+max-width: 100%;
+height: auto;
+overflow: hidden;
+display: grid;
+}
+
+.hero-trailer {
+display: none;
+border: none;
 }
 
 .detailheader img {
@@ -88,6 +106,20 @@ h1 {
 .title {
     display: flex;
     justify-content: space-between;
+}
+
+.favorite i {
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.favorite i.fa-regular {
+    color: gray;
+}
+
+.favorite i.fa-solid {
+    color: gold;
 }
 
 .genre {

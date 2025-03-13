@@ -1,0 +1,31 @@
+/* Styling til favoritlisten */
+#favorites-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.favorite-movie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.favorite-movie img {
+    width: 150px;
+    border-radius: 8px;
+}
+
+.favorite-movie button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.favorite-movie button:hover {
+    background-color: darkred;
+}

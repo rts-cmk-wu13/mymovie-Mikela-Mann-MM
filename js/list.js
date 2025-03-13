@@ -97,8 +97,6 @@ sectionShowing.appendChild(divShowing);
 sectionShowing.appendChild(moviesContainerShowing);
 main.appendChild(sectionShowing);
 
-// Tilføj section til body
-//document.body.appendChild(sectionShowing);
 
 currentPageMovie++;
 isFetchingMovies = false;
@@ -226,8 +224,6 @@ isFetchingPopularMovies = false;
 
 // Funktion til at hente detaljer om film
 function fetchMovieDetails(movieId) {
-   /*  if (isFetchingPopularMovies) return;
-    isFetchingPopularMovies = true; */
 
     return fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, popularOptions)
         .then(res => res.json())
