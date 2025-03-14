@@ -27,15 +27,19 @@
     transition: all 0.3s ease;
 }
 
-.menu {
-    display: none;
-}
-
 .menu.show {
     display: flex;
+}
+
+.menu__link {
+    color: black;
+    font-size: large;
+    font-weight: 700;
 }
 
 .menu li {
     z-index: 1000;
     height: 60px;
 }
+
+

@@ -10,13 +10,13 @@ header.innerHTML = `
 <div class="burgermenu header__menu-icon"><i class="fa-solid fa-bars"></i></div>
             <nav>
                 <ul class="menu">
-                    <li><a class="current" href="index.html">Home</a></li>
-                    <li><a href="#">Now Showing</a></li>
-                    <li><a href="#">Popular Movies</a></li>
-                    <li><a href="favorite.html">My favorites</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a class="menu__link" href="index.html">Home</a></li>
+                    <li><a class="menu__link" href="#">Now Showing</a></li>
+                    <li><a class="menu__link" href="#">Popular Movies</a></li>
+                    <li><a class="menu__link" href="favorite.html">My favorites</a></li>
+                    <li><a class="menu__link" href="#">Contact</a></li>
                     <li>
-                        <a class="last" href="#"><i class="fa-solid fa-film"></i>Rent a movie</a>
+                        <a class="last menu__link" href="#"><i class="fa-solid fa-film"></i> Rent a movie</a>
                     </li>
                 </ul>
             </nav> 

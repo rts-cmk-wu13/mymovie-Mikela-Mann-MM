@@ -9,8 +9,7 @@
 /* styling af attribut med []*/
 
 [data-dark="true"] {
-    background-color: var(--dark-color);
-    color: var(--dark-text);
+    color-scheme: dark;
 }
 
 [data-dark="false"] {
