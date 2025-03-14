@@ -37,11 +37,16 @@ border: none;
     display: none;
 }
 
+.detailheader {
+    display: flex;
+    justify-content: space-between;
+}
+
 span.slider.round{
     grid-area: 1 / 1 / 2 / -1;
-    justify-self: flex-end;
+    justify-self: end;
+    margin-left: auto;
     order: 3;
-    /* position: relative; */
     display: inline-block;
     width: 2.375rem;
     height: 1.313rem;
