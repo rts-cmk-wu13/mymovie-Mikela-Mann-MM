@@ -1,0 +1,100 @@
+/* darkmode */
+
+:root {
+    color-scheme: light dark;
+    --dark-color: hsl(0 0% 10%);
+    --light-color: hsl(0, 0%, 97%); 
+}
+
+/* styling af attribut med []*/
+
+[data-dark="true"] {
+    color-scheme: dark;
+}
+
+[data-dark="false"] {
+    color-scheme: light;
+}
+
+html, .darkmode {
+    color: light-dark(var(--dark-color), var(--light-color)); 
+    background-color: light-dark(var(--light-color), var(--dark-color));
+}
+
+[data-dark="true"] {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+[data-dark="true"] .wrapper {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+[data-dark="true"] .genre__name {
+    color: var(--genre_font-color);
+}
+
+[data-dark="true"] h1, [data-dark="true"] h2, [data-dark="true"] h4 {
+    color: var(--genre-color);
+}
+
+[data-dark="true"] h3 {
+    color: var(--white-color);
+}
+
+[data-dark="true"] p {
+    color: var(--p-color);
+}
+
+[data-dark="true"] td {
+    color: var(--black-color);
+}
+
+[data-dark="true"] .table__heading {
+    color: var(--p-color);
+}
+
+[data-dark="true"] #seeMorePopular, [data-dark="true"] #seeMoreShowing, [data-dark="true"] #seeMoreCast {
+    color: var(--link-color);
+    border-color: var(--link-color);
+    background-color: var(--dark-color);
+    
+}
+
+[data-dark="true"] .movie-link {
+    color: var(--link-color);
+}
+
+[data-dark="true"] i {
+    color: var(--link-color);
+}
+
+[data-dark="true"] i.fa-star {
+    color: var(--star-color);
+}
+
+[data-dark="true"] i.fa-arrow-left-long {
+    color: var(--white-color);
+}
+
+[data-dark="true"] footer {
+    color: var(--dark-color);
+}
+
+[data-dark="true"] .slider:before {
+    background-color: var(--black-color);
+}
+
+[data-dark="true"] input:checked + .slider, [data-dark="true"] input:focus {
+    background-color: var(--white-color);
+    box-shadow: 0 0 1px var(--white-color);
+}
+
+[data-dark="true"] .table__data {
+    color: var(--white-color);
+}
+
+[data-dark="true"] footer {
+    background-color: var(--dark-color);
+}
