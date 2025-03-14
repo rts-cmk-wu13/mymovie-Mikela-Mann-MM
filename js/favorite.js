@@ -20,6 +20,7 @@ header.innerHTML = `
 `;
 wrapper.appendChild(header);
 
+
 let main = document.createElement('main');
 wrapper.appendChild(main);
 
@@ -74,3 +75,4 @@ footer.innerHTML = `
     </div>
 `;
 wrapper.appendChild(footer);
+darkMode();
