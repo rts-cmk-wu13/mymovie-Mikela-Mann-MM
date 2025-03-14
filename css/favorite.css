@@ -1,8 +1,14 @@
 /* Styling til favoritlisten */
+@import url(colors.css);
+
 #favorites-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+}
+
+.fa-arrow-left {
+    font-size: 2em;
 }
 
 .favorite-movie {
@@ -18,14 +24,11 @@
 }
 
 .favorite-movie button {
-    background-color: red;
-    color: white;
+    background-color: var(--link-color);
+    color: var(--white-color);
     border: none;
     padding: 5px 10px;
     margin-top: 5px;
     cursor: pointer;
 }
 
-.favorite-movie button:hover {
-    background-color: darkred;
-}

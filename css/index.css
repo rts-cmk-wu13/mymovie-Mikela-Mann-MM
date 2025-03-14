@@ -6,7 +6,7 @@
   background-color: var(--white-color);
 }
 
-header {
+.header__menu-icon{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,11 +17,6 @@ header {
     align-items: center;
     margin-bottom: 0.625rem;
 }
-
-/* .header__menu-icon {
-    width: 2em;
-    /* margin-bottom: 0.625rem; */
-
 
 .showing {
     width: 100%;

@@ -150,6 +150,51 @@ fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_respons
                     </tr>
                 </table>
             `;
+
+
+detailsList.querySelector('.fa-bookmark').addEventListener('click', function(event) {
+
+    // Hent favoritter fra Local Storage
+    let favorites = readFromLocalStorage("favorites") || [];
+
+    // Hent film ID fra URL
+    let params = new URLSearchParams(window.location.search);
+    let id = params.get("movieId");
+
+    // Tjek om filmen allerede er favorit og opdater ikonets farve
+    updateFavoriteIcon(event.target, favorites.includes(id));
+
+    // Håndter klik på favorit-knappen
+    
+        toggleFavorite(id, event.target);
+});
+
+
+function toggleFavorite(movieId, button) {
+    let favorites = readFromLocalStorage("favorites") || [];
+    if (favorites.includes(movieId)) {
+        // Fjern fra favoritter
+        favorites = favorites.filter(favId => favId !== movieId);
+    } else {
+         // Tilføj til favoritter
+        favorites.push(movieId);
+    }
+     // Gem opdateret liste i Local Storage
+    saveToLocalStorage("favorites", favorites);
+
+    // Opdater favorit-ikonets farve
+    updateFavoriteIcon(button, favorites.includes(movieId));
+}
+
+function updateFavoriteIcon(button, isFavorite) {
+    if (isFavorite) {
+        button.classList.remove("fa-regular");
+        button.classList.add("fa-solid");
+    } else {
+        button.classList.remove("fa-solid");
+        button.classList.add("fa-regular");
+    }
+}
     
             return fetch(`https://api.themoviedb.org/3/movie/${id}/release_dates`, options);
         })
@@ -224,51 +269,5 @@ buttonCast.addEventListener("click", () => {
     loadMoreCast();
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    let favoriteButton = document.querySelector(".myfavorite i");
-    if (!favoriteButton) return;
 
-    // Hent favoritter fra Local Storage
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-    // Hent film ID fra URL
-    let search = window.location.search;
-    let params = new URLSearchParams(search);
-    let id = params.get("movieId");
-
-    // Tjek om filmen allerede er favorit og opdater ikonets farve
-    updateFavoriteIcon(favoriteButton, favorites.includes(id));
-
-    // Håndter klik på favorit-knappen
-    favoriteButton.addEventListener("click", function () {
-        toggleFavorite(id, favoriteButton);
-    });
-});
-
-function toggleFavorite(movieId, button) {
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-    if (favorites.includes(movieId)) {
-        // Fjern fra favoritter
-        favorites = favorites.filter(favId => favId !== movieId);
-    } else {
-        // Tilføj til favoritter
-        favorites.push(movieId);
-    }
-
-    // Gem opdateret liste i Local Storage
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-
-    // Opdater favorit-ikonets farve
-    updateFavoriteIcon(button, favorites.includes(movieId));
-}
-
-function updateFavoriteIcon(button, isFavorite) {
-    if (isFavorite) {
-        button.classList.remove("fa-regular");
-        button.classList.add("fa-solid");
-    } else {
-        button.classList.remove("fa-solid");
-        button.classList.add("fa-regular");
-    }
-}

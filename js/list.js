@@ -6,8 +6,8 @@ document.body.appendChild(wrapper);
 // HEADER:
 let header = document.querySelector("header") || document.createElement("header");
 header.innerHTML = `
-
-<div class="burgermenu header__menu-icon"><i class="fa-solid fa-bars"></i></div>
+<div class="header__menu-icon">
+<div class="burgermenu"><i class="fa-solid fa-bars"></i></div>
             <nav>
                 <ul class="menu">
                     <li><a class="menu__link" href="index.html">Home</a></li>
@@ -22,20 +22,13 @@ header.innerHTML = `
             </nav> 
 
 
-<!-- <img class="header__menu-icon" src="./icons/menu.png">  -->
-        <!-- <div class="burgermenu header__menu-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-            <div> --> 
-
-
         <h1>MyMovies</h1>
         <div class="darkmode">
             <label class="switch">
                 <input type="checkbox" id="switch" />
                 <span class="slider round"></span>
             </label>
+        </div>
         </div>
     `;
     wrapper.appendChild(header);

@@ -4,6 +4,8 @@ const burgerIcon = document.querySelector(".fa-solid.fa-bars");
 
 burger.addEventListener("click", menuToggle);
 
+console.log(burger);
+
 function menuToggle() {
     menu.classList.toggle("show"); // Toggle "show" klassen
     if (menu.classList.contains("show")) {

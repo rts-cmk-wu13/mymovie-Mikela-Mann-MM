@@ -1,4 +1,4 @@
-/**
+/* /**
  * save an item to local storage
  * @param {string} key - key to be used in local storage 
  * @param {string | number | boolean | object | any []} value - value to be saved  
