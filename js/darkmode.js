@@ -19,11 +19,11 @@ if( isDarkMode == null ) {
 if (darkState) {
     switchElm.checked = true 
     rootElm.setAttribute("data-dark", switchElm.checked)
-    //movieIcon.setAttribute('./icons/bookmarkdark.png');
+    //movieIcon.setAttribute('src', './icons/bookmarkdark.png');
 } else {
     switchElm.checked = false;
     rootElm.setAttribute("data-dark", switchElm.checked)
-    //movieIcon.setAttribute('./icons/bookmarkdark.png')
+    //movieIcon.setAttribute('src', './icons/bookmarkdark.png');
 }
 
 switchElm.addEventListener("change", function() {
@@ -32,11 +32,11 @@ switchElm.addEventListener("change", function() {
     if(switchElm.checked){
         rootElm.setAttribute("data-dark", switchElm.checked)
         saveToLocalStorage("isDarkMode", switchElm.checked)
-        movieIcon.setAttribute('./icons/bookmarkdark.png')
+        //movieIcon.setAttribute('src', './icons/bookmarkdark.png');
     } else {
         rootElm.setAttribute("data-dark", switchElm.checked)
         saveToLocalStorage("isDarkMode", switchElm.checked)
-        //movieIcon.setAttribute('./icons/bookmarkdark.png')
+        //movieIcon.setAttribute('src', './icons/bookmarkdark.png');
     }
     
 })

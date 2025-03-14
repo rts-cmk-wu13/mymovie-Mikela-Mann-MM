@@ -1,10 +1,3 @@
-/**
- * Henter favoritfilm fra Local Storage eller initialiserer en tom liste.
- * @type {Array<string>}
- */
-let favorites = readFromLocalStorage("favorites") || [];
-
-
 // WRAPPER
 let wrapper = document.createElement("div");
 wrapper.classList.add("wrapper");
@@ -14,27 +7,27 @@ document.body.appendChild(wrapper);
 let header = document.querySelector("header") || document.createElement("header");
 header.innerHTML = `
 
-<!-- <div class="burgermenu header__menu-icon"><i class="fa-solid fa-bars"></i></div>
+<div class="burgermenu header__menu-icon"><i class="fa-solid fa-bars"></i></div>
             <nav>
                 <ul class="menu">
                     <li><a class="current" href="index.html">Home</a></li>
-                    <li><a href="produkter.html">Now Showing</a></li>
-                    <li><a href="produkter.html">Popular Movies</a></li>
-                    <li><a href="produkter.html">My favorites</a></li>
+                    <li><a href="#">Now Showing</a></li>
+                    <li><a href="#">Popular Movies</a></li>
+                    <li><a href="favorite.html">My favorites</a></li>
                     <li><a href="#">Contact</a></li>
                     <li>
                         <a class="last" href="#"><i class="fa-solid fa-film"></i>Rent a movie</a>
                     </li>
                 </ul>
-            </nav> -->
+            </nav> 
 
 
-<img class="header__menu-icon" src="./icons/menu.png"> 
-       <!-- <div class="burgermenu header__menu-icon">
+<!-- <img class="header__menu-icon" src="./icons/menu.png">  -->
+        <!-- <div class="burgermenu header__menu-icon">
             <span></span>
             <span></span>
             <span></span>
-            <div>  -->
+            <div> --> 
 
 
         <h1>MyMovies</h1>
@@ -354,7 +347,7 @@ if (footer) {
         <div class="footer__content">
         <a href="#"><img class="footer__menu-icon1" src="./icons/bookmark1.svg"></a>
         <a href="#"><i class="icon--ticket fa-solid fa-ticket"></i></a>
-        <a href="#"><i class="icon--bookmark fa-regular fa-bookmark"></i></a>
+        <a href="favorite.html"><i class="icon--bookmark fa-regular fa-bookmark"></i></a>
         </div>
     `;
 

@@ -1,5 +1,6 @@
 @import url(colors.css);
 @import url(texttypes.css);
+@import url(burger.css);
 
 :root {
   background-color: var(--white-color);
@@ -17,10 +18,10 @@ header {
     margin-bottom: 0.625rem;
 }
 
-.header__menu-icon {
+/* .header__menu-icon {
     width: 2em;
-    margin-bottom: 0.625rem;
-}
+    /* margin-bottom: 0.625rem; */
+
 
 .showing {
     width: 100%;
@@ -69,7 +70,6 @@ img {
     color: var(--star-color);
     width: 0.75rem;
     height: 0.75rem;
-    margin: 0.094rem 0.25rem;
 }
 
 .popular-movie__article {
@@ -90,12 +90,14 @@ img {
 }
 
 .popular-movie__article {
-    width: 23.438rem;
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 33% 60%;
+    gap: 1rem;
+    
 }
 .popular img {
-    width: 5.313rem;
+    width: 100%;
     margin: 0 1rem 1rem 0;
 }
 

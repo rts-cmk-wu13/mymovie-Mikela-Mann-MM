@@ -1,19 +1,8 @@
 .burgermenu {
-    display: flex;
-    justify-content: end;
-    align-self: center;
-    padding: 10px;
     position: fixed;
     z-index: 100;
     width: 100%;
     max-width: 360px;
-}
-
-.burgermenu i {
-    font-size: 2em;
-    justify-self: flex-start;
-    align-self: end;
-    margin-right: 30px; 
 }
 
 .burgermenu i.fa-xmark {
@@ -30,15 +19,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--link-color); 
+    background-color: var(--link-color);
     z-index: 10;
-    gap: 0; 
-    color: #000; 
-    font-size: 1.5rem; 
+    gap: 0;
+    color: #000;
+    font-size: 1.5rem;
     transition: all 0.3s ease;
 }
 
-.menu.menu--footer {
+.menu {
     display: none;
 }
 
@@ -47,47 +36,6 @@
 }
 
 .menu li {
-    z-index:1000;
+    z-index: 1000;
     height: 60px;
 }
-
-.menu li.dropdown {
-    height: 60px;
-    align-items: flex-start;
-
-}
-
-.menu a.current::after {
-    display: none;
-}
-
-/*  
-.burgermenu {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 40px;
-    height: 30px;
-    cursor: pointer;
-}
-
-.burgermenu span {
-    display: block;
-    width: 100%;
-    height: 5px;
-    background-color: black;  Ændr farven efter behov 
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
-}
-
- .burgermenu.open span:nth-child(1) {
-    transform: translateY(12px) rotate(45deg);
-}
-
-.burgermenu.open span:nth-child(2) {
-    opacity: 0;
-}
-
-.burgermenu.open span:nth-child(3) {
-    transform: translateY(-12px) rotate(-45deg);
-} */

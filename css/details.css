@@ -86,6 +86,11 @@ main {
     padding: 24px;
 }
 
+.bookmark {
+    display: flex;
+    justify-content: space-between;
+}
+
 .movie-detail,
 .movie-description,
 .cast {
@@ -109,9 +114,13 @@ h1 {
 }
 
 .favorite i {
-    font-size: 24px;
     cursor: pointer;
     transition: color 0.3s ease;
+}
+
+button.myfavorite {
+    border: none; 
+    background: none;
 }
 
 .favorite i.fa-regular {

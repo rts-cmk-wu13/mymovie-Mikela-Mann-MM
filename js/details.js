@@ -131,7 +131,10 @@ fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_respons
             paragraphDescription.textContent = movie.overview;
             
             detailsList.innerHTML = `
-                <h1>${movie.title}</h1><a href="favorite.html"><i class="favorite fa-regular fa-bookmark"></i></a>
+                <div class="bookmark">
+                <h1>${movie.title}</h1>
+                <button class="myfavorite"><i class="favorite fa-regular fa-bookmark"></i></button>
+                </div>
                 <p class="rating_p"><i class="fa-solid fa-star"></i> ${movie.vote_average}/10 IMDb</p>
                 <div class="genre">${movie.genres.map(genre => `<p class="genre__name caption_type">${genre.name}</p>`).join("")}</div>
                 <table>
@@ -222,12 +225,11 @@ buttonCast.addEventListener("click", () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    let favoriteButton = document.querySelector(".favorite i");
-
+    let favoriteButton = document.querySelector(".myfavorite i");
     if (!favoriteButton) return;
 
     // Hent favoritter fra Local Storage
-    let favorites = readFromLocalStorage("favorites") || [];
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
     // Hent film ID fra URL
     let search = window.location.search;
@@ -235,28 +237,38 @@ document.addEventListener("DOMContentLoaded", function () {
     let id = params.get("movieId");
 
     // Tjek om filmen allerede er favorit og opdater ikonets farve
-    if (favorites.includes(id)) {
-        favoriteButton.classList.remove("fa-regular");
-        favoriteButton.classList.add("fa-solid");
-    }
+    updateFavoriteIcon(favoriteButton, favorites.includes(id));
 
     // Håndter klik på favorit-knappen
     favoriteButton.addEventListener("click", function () {
-        if (favorites.includes(id)) {
-            // Fjern fra favoritter
-            favorites = favorites.filter(favId => favId !== id);
-            favoriteButton.classList.remove("fa-solid");
-            favoriteButton.classList.add("fa-regular");
-        } else {
-            // Tilføj til favoritter
-            favorites.push(id);
-            favoriteButton.classList.remove("fa-regular");
-            favoriteButton.classList.add("fa-solid");
-        }
-
-        // Gem opdateret liste i Local Storage
-        saveToLocalStorage("favorites", favorites);
+        toggleFavorite(id, favoriteButton);
     });
 });
-        
-    
+
+function toggleFavorite(movieId, button) {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    if (favorites.includes(movieId)) {
+        // Fjern fra favoritter
+        favorites = favorites.filter(favId => favId !== movieId);
+    } else {
+        // Tilføj til favoritter
+        favorites.push(movieId);
+    }
+
+    // Gem opdateret liste i Local Storage
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+
+    // Opdater favorit-ikonets farve
+    updateFavoriteIcon(button, favorites.includes(movieId));
+}
+
+function updateFavoriteIcon(button, isFavorite) {
+    if (isFavorite) {
+        button.classList.remove("fa-regular");
+        button.classList.add("fa-solid");
+    } else {
+        button.classList.remove("fa-solid");
+        button.classList.add("fa-regular");
+    }
+}
