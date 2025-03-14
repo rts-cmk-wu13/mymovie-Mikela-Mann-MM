@@ -4,7 +4,8 @@
 #favorites-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 1.25rem;
+    margin-bottom: 4.5rem;
 }
 
 .fa-arrow-left {
@@ -19,16 +20,16 @@
 }
 
 .favorite-movie img {
-    width: 150px;
-    border-radius: 8px;
+    width: 9.375rem;
+    border-radius: 0.5rem;
 }
 
 .favorite-movie button {
     background-color: var(--link-color);
     color: var(--white-color);
     border: none;
-    padding: 5px 10px;
-    margin-top: 5px;
+    padding: 0.313rem 0.625rem;
+    margin-top: 0.313rem;
     cursor: pointer;
 }
 
