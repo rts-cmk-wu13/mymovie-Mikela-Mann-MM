@@ -44,6 +44,7 @@ border: none;
 
 span.slider.round{
     grid-area: 1 / 1 / 2 / -1;
+    position: relative;
     justify-self: end;
     margin-left: auto;
     order: 3;
@@ -53,6 +54,14 @@ span.slider.round{
     z-index: 10;
     margin: 1.5rem 1.125rem;
 }
+
+/* @supports (-webkit-touch-callout: none) {
+    span.slider.round {
+        margin-right: 2rem; /* Justér margin i Safari 
+        position: relative;
+    }
+} */
+
 
 /* .switch-details {
     grid-area: 1 / 1 / 2 / -1;
